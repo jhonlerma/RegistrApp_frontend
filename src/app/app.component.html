@@ -1,4 +1,4 @@
-<app-rg-app-bar></app-rg-app-bar>
-<app-rg-left-sidebar></app-rg-left-sidebar>
-<mat-spinner></mat-spinner>
+<!-- <app-rg-app-bar></app-rg-app-bar>
+<app-rg-left-sidebar></app-rg-left-sidebar> -->
+<mat-spinner *ngIf="showLoadingScreen"></mat-spinner>
 <router-outlet></router-outlet>

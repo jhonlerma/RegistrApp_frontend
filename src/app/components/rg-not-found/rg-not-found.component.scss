@@ -1,0 +1,17 @@
+.not-found-container{
+    display: flex;
+    flex-direction: column;
+    margin: 64px;
+}
+
+.mat-display-3{
+    display: flex;
+    align-self: center;
+    font-weight: bold;
+}
+
+.not-found-img{
+    display: flex;
+    align-self: center;
+    width: 640px;
+}

@@ -21,6 +21,7 @@ import { RgLoginComponent } from './components/rg-login/rg-login.component';
 import { RgLeftSidebarComponent } from './components/rg-left-sidebar/rg-left-sidebar.component';
 import { RgDashboardComponent } from './components/rg-dashboard/rg-dashboard.component';
 import { RgAppBarComponent } from './components/rg-app-bar/rg-app-bar.component';
+import { RgNotFoundComponent } from './components/rg-not-found/rg-not-found.component';
 
 @NgModule({
   declarations: [
@@ -28,7 +29,8 @@ import { RgAppBarComponent } from './components/rg-app-bar/rg-app-bar.component'
     RgLeftSidebarComponent,
     RgDashboardComponent,
     RgLoginComponent,
-    RgAppBarComponent
+    RgAppBarComponent,
+    RgNotFoundComponent
   ],
   imports: [
     BrowserModule,
