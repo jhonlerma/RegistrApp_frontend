@@ -1,17 +1,27 @@
-.not-found-container{
+:host{
     display: flex;
     flex-direction: column;
-    margin: 64px;
+    align-content: center;
+    justify-content: center;
+    width: 100%;
+    margin: 0;
+    background-image: url("../../../assets/images/not-found-background.webp");
+    background-repeat: no-repeat;
+    background-size: 125vw 125vh;
+    background-position-x: -250px;
+    background-position-y: -150px;
 }
 
-.mat-display-3{
+.mat-display-2{
     display: flex;
     align-self: center;
+    color: #ffffff;
     font-weight: bold;
+    text-align: center;
 }
 
 .not-found-img{
     display: flex;
     align-self: center;
-    width: 640px;
+    width: 400px;
 }
