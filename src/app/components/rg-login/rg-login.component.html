@@ -1,1 +1,40 @@
-<p>rg-login works!</p>
+<mat-card class="login-card">
+    <mat-card-header class="login-header">
+        <mat-card-title class="login-title">Iniciar Sesión</mat-card-title>
+    </mat-card-header>
+
+    <img class="login-logo" mat-card-image src="../../../assets/images/logo.webp" alt="Photo of a Shiba Inu">
+    
+    <mat-card-content class="login-form">
+        
+        <form [formGroup]="loginForm" (ngSubmit)="loginSubmit()">
+
+            <mat-form-field class="login-form-field" appearance="standard">
+                <mat-label>Correo Electrónico</mat-label>
+                <input formControlName="email" name="email" matInput placeholder="ejemplo@mail.com">
+                <mat-icon fontSet="material-icons-outlined" matSuffix>mail</mat-icon>
+                <mat-hint>Ingrese el correo de registro</mat-hint>
+
+                <mat-error *ngIf="isInvalidField('email')">
+                    <span *ngIf="hasError('email', 'email')">Ingrese un email válido</span>
+                    <span *ngIf="hasError('email', 'required')">El campo es requerido</span>
+                </mat-error>
+
+            </mat-form-field>
+
+            <mat-form-field class="login-form-field" appearance="standard">
+                <mat-label>Contraseña</mat-label>
+                <input formControlName="password" name="password" matInput type="password" placeholder="Contraseña">
+                <mat-icon fontSet="material-icons-outlined" matSuffix>lock_open</mat-icon>
+                <mat-hint>Ingrese la contraseña para iniciar sesión</mat-hint>
+
+                <mat-error *ngIf="isInvalidField('password')">
+                    <span *ngIf="hasError('pasword', 'required')">El campo es requerido</span>
+                </mat-error>
+            </mat-form-field>
+
+            <button class="login-button" type="submit" mat-raised-button color="accent">Iniciar Sesión</button>
+
+        </form>
+    </mat-card-content>
+</mat-card>

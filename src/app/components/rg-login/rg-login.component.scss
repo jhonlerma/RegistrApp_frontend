@@ -1,0 +1,40 @@
+:host{
+    display: flex;
+    justify-content: center;
+    align-content: center;
+    width: 100%;
+    height: 100%;
+}
+.login-card {
+    max-width: 400px;
+    align-self: center;
+}
+
+.login-header{
+    justify-content: center;
+}
+
+.login-title{
+    font-weight: bold;
+}
+
+.login-logo{
+    margin: auto;
+    width: 256px;
+}
+
+.login-form{
+    padding: 24px;
+}
+
+.login-form-field{
+    display: flex;
+}
+
+.login-button{
+    display: flex;
+    justify-content: center;
+    margin-top: 24px;
+    width: 100%;
+
+}
