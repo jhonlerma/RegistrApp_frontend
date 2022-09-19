@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
+import { MatSnackBar } from '@angular/material/snack-bar';
 import { AuthService } from 'src/app/services/auth/auth.service';
 
 @Component({
@@ -14,7 +15,9 @@ export class RgLoginComponent implements OnInit {
     password: new FormControl("", [Validators.required])
   });
 
-  constructor(private authService: AuthService) { }
+  showPasswordIcon: string = "visibility_off";
+
+  constructor(private authService: AuthService, private snackBar: MatSnackBar) { }
 
   ngOnInit(): void {
   }
@@ -22,8 +25,8 @@ export class RgLoginComponent implements OnInit {
   loginSubmit() {
     this.authService.login(this.loginForm.value['email']!, this.loginForm.value['password']!)
     .subscribe( {
-      next: ()=>{console.log('inicio de sesión exitoso')},
-      error: ()=>{console.log('inicio de sesión fallidos')}
+      next: ()=>{this.snackBar.open('inicio de sesión exitoso', 'cerrar', {duration: 2000})},
+      error: (err)=>{this.snackBar.open(err, 'cerrar', {duration: 2000})}
    });
     console.log(`peticion http ${JSON.stringify(this.loginForm.value)}`);
   }
@@ -34,5 +37,13 @@ export class RgLoginComponent implements OnInit {
 
   hasError(field: string, validation: string) {
     return this.loginForm.get(field)?.hasError(validation);
+  }
+
+  toogleShowPasswordIcon(){
+     if(this.showPasswordIcon == 'visibility_off'){
+      this.showPasswordIcon = 'visibility';
+     }else{
+      this.showPasswordIcon = 'visibility_off';
+     }
   }
 }

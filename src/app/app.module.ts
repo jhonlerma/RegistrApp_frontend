@@ -20,6 +20,7 @@ import { MatCardModule } from '@angular/material/card';
 import { MatMenuModule } from '@angular/material/menu';
 import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 import { MatFormFieldModule } from "@angular/material/form-field";
+import { MatSnackBarModule } from "@angular/material/snack-bar";
 
 import { AppComponent } from './app.component';
 import { RgLoginComponent } from './components/rg-login/rg-login.component';
@@ -46,9 +47,11 @@ import { RgPublicAppBarComponent } from './components/rg-public-app-bar/rg-publi
   imports: [
     BrowserModule,
     HttpClientModule,
+    ReactiveFormsModule,
     AppRoutingModule,
     BrowserAnimationsModule,
     LayoutModule,
+    FlexLayoutModule,
     MatToolbarModule,
     MatButtonModule,
     MatSidenavModule,
@@ -60,8 +63,7 @@ import { RgPublicAppBarComponent } from './components/rg-public-app-bar/rg-publi
     MatProgressSpinnerModule,
     MatFormFieldModule,
     MatInputModule,
-    FlexLayoutModule,
-    ReactiveFormsModule
+    MatSnackBarModule,
   ],
   providers: [],
   bootstrap: [AppComponent]

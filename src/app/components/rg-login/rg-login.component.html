@@ -24,8 +24,8 @@
 
             <mat-form-field class="login-form-field" appearance="standard">
                 <mat-label>Contraseña</mat-label>
-                <input formControlName="password" name="password" matInput type="password" placeholder="Contraseña">
-                <mat-icon fontSet="material-icons-outlined" matSuffix>lock_open</mat-icon>
+                <input formControlName="password" name="password" matInput placeholder="Contraseña" [type]="showPasswordIcon === 'visibility'?'text': 'password' ">
+                <mat-icon fontSet="material-icons-outlined" matSuffix (click)="toogleShowPasswordIcon()">{{showPasswordIcon}}</mat-icon>
                 <mat-hint>Ingrese la contraseña para iniciar sesión</mat-hint>
 
                 <mat-error *ngIf="isInvalidField('password')">
