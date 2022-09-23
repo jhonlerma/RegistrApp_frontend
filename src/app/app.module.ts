@@ -30,6 +30,14 @@ import { RgAppBarComponent } from './components/rg-app-bar/rg-app-bar.component'
 import { RgNotFoundComponent } from './components/rg-not-found/rg-not-found.component';
 import { RgPublicMainComponent } from './components/rg-public-main/rg-public-main.component';
 import { RgPrivateMainComponent } from './components/rg-private-main/rg-private-main.component';
+import { RgUserManagementComponent } from './components/rg-user-management/rg-user-management.component';
+import { RgRoleManagementComponent } from './components/rg-role-management/rg-role-management.component';
+import { RgPermissionManagementComponent } from './components/rg-permission-management/rg-permission-management.component';
+import { RgTableManagementComponent } from './components/rg-table-management/rg-table-management.component';
+import { RgPoliticalPartyManagementComponent } from './components/rg-political-party-management/rg-political-party-management.component';
+import { RgCandidateManagementComponent } from './components/rg-candidate-management/rg-candidate-management.component';
+import { RgResultManagementComponent } from './components/rg-result-management/rg-result-management.component';
+import { RgReportsViewerComponent } from './components/rg-reports-viewer/rg-reports-viewer.component';
 
 @NgModule({
   declarations: [
@@ -41,6 +49,14 @@ import { RgPrivateMainComponent } from './components/rg-private-main/rg-private-
     RgNotFoundComponent,
     RgPublicMainComponent,
     RgPrivateMainComponent,
+    RgUserManagementComponent,
+    RgRoleManagementComponent,
+    RgPermissionManagementComponent,
+    RgTableManagementComponent,
+    RgPoliticalPartyManagementComponent,
+    RgCandidateManagementComponent,
+    RgResultManagementComponent,
+    RgReportsViewerComponent,
   ],
   imports: [
     BrowserModule,
