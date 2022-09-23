@@ -30,7 +30,6 @@ import { RgAppBarComponent } from './components/rg-app-bar/rg-app-bar.component'
 import { RgNotFoundComponent } from './components/rg-not-found/rg-not-found.component';
 import { RgPublicMainComponent } from './components/rg-public-main/rg-public-main.component';
 import { RgPrivateMainComponent } from './components/rg-private-main/rg-private-main.component';
-import { RgPublicAppBarComponent } from './components/rg-public-app-bar/rg-public-app-bar.component';
 
 @NgModule({
   declarations: [
@@ -42,7 +41,6 @@ import { RgPublicAppBarComponent } from './components/rg-public-app-bar/rg-publi
     RgNotFoundComponent,
     RgPublicMainComponent,
     RgPrivateMainComponent,
-    RgPublicAppBarComponent
   ],
   imports: [
     BrowserModule,

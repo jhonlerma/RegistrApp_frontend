@@ -1,11 +1,12 @@
 import { Injectable } from '@angular/core';
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpResponse } from '@angular/common/http';
 import { DataService } from "../data/data.service";
 import { environment } from "../../../environments/environment";
-import { catchError, map, Observable, throwError } from "rxjs";
+import { catchError, from, map, Observable, ObservableInput, of, onErrorResumeNext, throwError } from "rxjs";
 import { LoginResponse } from 'src/app/models/auth/login-response';
 import { TOKEN } from 'src/app/constants';
 import { MeResponse } from 'src/app/models/auth/me-response';
+import { Router, UrlTree } from '@angular/router';
 
 @Injectable({
   providedIn: 'root'
@@ -13,7 +14,11 @@ import { MeResponse } from 'src/app/models/auth/me-response';
 export class AuthService {
   ENDPOINT = 'auth/'
 
-  constructor(private http: HttpClient, private dataService: DataService) { }
+  constructor(
+    private http: HttpClient,
+    private dataService: DataService,
+    private router: Router
+    ) { }
   
   login(email: string, password: string): Observable<LoginResponse>{
     this.dataService.loadingScreen.next(true);
@@ -36,16 +41,55 @@ export class AuthService {
     }));
   }
 
-  me():Observable<MeResponse>{
+  authMe():Observable<boolean | UrlTree>{
     this.dataService.loadingScreen.next(true);
-    return this.http.get<MeResponse>(`${environment.url}me`)
-    .pipe(map(response => {
+    let response: Observable<boolean | UrlTree>;
+    if(localStorage.getItem('access_token') != null){
+
+      response = this.http.get<boolean | UrlTree>(`${environment.url}auth/me`,{
+        headers:{
+          'authorization': `Bearer ${localStorage.getItem('access_token')}`
+        }
+      }).pipe(map(response => {
+        this.dataService.loadingScreen.next(false);
+        return true;
+      }), catchError((err, caught) => {
+        localStorage.removeItem('access_token');
+        console.log(err)
+        return this.router.navigate(['/']);
+      }))
+    }else{
       this.dataService.loadingScreen.next(false);
-      return response;
-    }), catchError(err => {
-      this.dataService.loadingScreen.next(false);
-      return throwError(()=> 'Usuario no autorizado');
-    }))
+      response = from(this.router.navigate(['/']));
+    }
+    return response;
+    
   }
+
+  // noAuthMe():Observable<boolean | UrlTree> | Promise<boolean | UrlTree> | boolean | UrlTree{
+  //   this.dataService.loadingScreen.next(true);
+
+  //   if(localStorage.getItem('access_token')=== null){
+
+  //   }
+  //   const response = this.http.get<boolean | UrlTree>(`${environment.url}auth/me`,{
+  //     headers:{
+  //       'authorization': `Bearer ${localStorage.getItem('access_token')}`
+  //     }
+  //   }).pipe(
+  //     catchError(error => {
+  //       if (error) {
+  //         this.dataService.loadingScreen.next(false);
+  //         return of(true); // emit `false` as next notification instead of the original error
+  //       }
+  //       this.dataService.loadingScreen.next(false);
+  //       return this.router.navigate(['/']);; // rethrow other status codes as error
+  //     }),
+  //   );    
+
+  //   return response;
+    
+  // }
+
 
 }

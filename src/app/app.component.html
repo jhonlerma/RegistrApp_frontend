@@ -1,2 +1,7 @@
-<router-outlet></router-outlet>
+<header class="header">
+    <app-rg-app-bar></app-rg-app-bar>
+</header>
+<main class="main">
+    <router-outlet></router-outlet>
+</main>
 <mat-spinner class="spinner" *ngIf="showLoadingScreen" diameter="50" strokeWidth="8" color="accent"></mat-spinner>
