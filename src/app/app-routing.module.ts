@@ -38,39 +38,39 @@ const routes: Routes = [
     component: RgPrivateMainComponent,
     children:[
       {
-        path:'/',
+        path:'',
         component: RgDashboardComponent
       },
       {
-        path:'/user-management',
+        path:'user-management',
         component: RgUserManagementComponent
       },
       {
-        path:'/role-management',
+        path:'role-management',
         component: RgRoleManagementComponent
       },
       {
-        path:'/permission-management',
+        path:'permission-management',
         component: RgPermissionManagementComponent
       },
       {
-        path:'/table-management',
+        path:'table-management',
         component: RgTableManagementComponent
       },
       {
-        path:'/political-party-management',
+        path:'political-party-management',
         component: RgPoliticalPartyManagementComponent
       },
       {
-        path:'/candidate-management',
+        path:'candidate-management',
         component: RgCandidateManagementComponent
       },
       {
-        path:'/result-management',
+        path:'result-management',
         component: RgResultManagementComponent
       },
       {
-        path:'/reports',
+        path:'reports',
         component: RgReportsViewerComponent
       },
     ]
