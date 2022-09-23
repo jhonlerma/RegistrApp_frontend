@@ -26,10 +26,6 @@ const routes: Routes = [
         path: '',
         component: RgLoginComponent
       },
-      {
-        path: 'not-found',
-        component: RgNotFoundComponent
-      },
     ],
   },
   {
@@ -73,6 +69,7 @@ const routes: Routes = [
         path:'reports',
         component: RgReportsViewerComponent
       },
+      
     ]
   },
   {

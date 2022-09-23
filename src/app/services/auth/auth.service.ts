@@ -18,78 +18,68 @@ export class AuthService {
     private http: HttpClient,
     private dataService: DataService,
     private router: Router
-    ) { }
-  
-  login(email: string, password: string): Observable<LoginResponse>{
+  ) { }
+
+  login(email: string, password: string): Observable<LoginResponse> {
     this.dataService.loadingScreen.next(true);
-    return this.http.post<LoginResponse>(`${environment.url}${this.ENDPOINT}`,{
+    return this.http.post<LoginResponse>(`${environment.url}${this.ENDPOINT}`, {
       email,
       password
     },
-    {
-      observe: 'response'
-    }).pipe(map(response => {
-      
-      this.dataService.loadingScreen.next(false);
-      if(response.ok){
-        localStorage.setItem(TOKEN, response.body?.access_token!)
-      }
-      return response.body!;
-    }), catchError((err) => {
-      this.dataService.loadingScreen.next(false);
-      return throwError(() => 'Credenciales Inválidas');
-    }));
-  }
-
-  authMe():Observable<boolean | UrlTree>{
-    this.dataService.loadingScreen.next(true);
-    let response: Observable<boolean | UrlTree>;
-    if(localStorage.getItem('access_token') != null){
-
-      response = this.http.get<boolean | UrlTree>(`${environment.url}auth/me`,{
-        headers:{
-          'authorization': `Bearer ${localStorage.getItem('access_token')}`
-        }
+      {
+        observe: 'response'
       }).pipe(map(response => {
         this.dataService.loadingScreen.next(false);
-        return true;
-      }), catchError((err, caught) => {
-        localStorage.removeItem('access_token');
-        console.log(err)
-        return this.router.navigate(['/']);
-      }))
-    }else{
-      this.dataService.loadingScreen.next(false);
-      response = from(this.router.navigate(['/']));
-    }
-    return response;
-    
+        if (response.ok) {
+          this.dataService.isLoggedIn.next(true);
+          localStorage.setItem(TOKEN, response.body?.access_token!)
+        }
+        return response.body!;
+      }), catchError((err) => {
+        this.dataService.loadingScreen.next(false);
+        this.dataService.isLoggedIn.next(false);
+        return throwError(() => 'Credenciales Inválidas');
+      }));
   }
 
-  // noAuthMe():Observable<boolean | UrlTree> | Promise<boolean | UrlTree> | boolean | UrlTree{
-  //   this.dataService.loadingScreen.next(true);
+  authMe(): Observable<boolean | UrlTree> {
+    this.dataService.loadingScreen.next(true);
+    let response: Observable<boolean | UrlTree>;
+    if (localStorage.getItem('access_token') != null) {
 
-  //   if(localStorage.getItem('access_token')=== null){
+      response = this.http.get<MeResponse>(`${environment.url}auth/me`, {
+        observe: 'body',
+        headers: {
+          'authorization': `Bearer ${localStorage.getItem('access_token')}`
+        }
+      }).pipe(map(body => {
+        this.dataService.loadingScreen.next(false);
+        localStorage.setItem('username', body.username);
+        localStorage.setItem('role', body.role.name)
+        this.dataService.isLoggedIn.next(true);
+        return true;
+      }), catchError((err) => {
+        this.dataService.loadingScreen.next(false);
+        localStorage.removeItem('access_token');
+        localStorage.removeItem('username');
+        localStorage.removeItem('role');
+        this.dataService.isLoggedIn.next(false);
+        return this.router.navigate(['/']);
+      }))
+    } else {
+      this.dataService.loadingScreen.next(false);
+      response = from(this.router.navigate(['/']));
+      this.dataService.isLoggedIn.next(false);
+    }
+    return response;
 
-  //   }
-  //   const response = this.http.get<boolean | UrlTree>(`${environment.url}auth/me`,{
-  //     headers:{
-  //       'authorization': `Bearer ${localStorage.getItem('access_token')}`
-  //     }
-  //   }).pipe(
-  //     catchError(error => {
-  //       if (error) {
-  //         this.dataService.loadingScreen.next(false);
-  //         return of(true); // emit `false` as next notification instead of the original error
-  //       }
-  //       this.dataService.loadingScreen.next(false);
-  //       return this.router.navigate(['/']);; // rethrow other status codes as error
-  //     }),
-  //   );    
+  }
 
-  //   return response;
-    
-  // }
-
+  logout() {
+    localStorage.removeItem('access_token');
+    localStorage.removeItem('username');
+    localStorage.removeItem('role');
+    this.dataService.isLoggedIn.next(false);
+  }
 
 }

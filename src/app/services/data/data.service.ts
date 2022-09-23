@@ -7,6 +7,7 @@ import { BehaviorSubject } from 'rxjs';
 export class DataService {
 
   loadingScreen: BehaviorSubject<boolean> = new BehaviorSubject(false);
-  
+  isLoggedIn: BehaviorSubject<boolean> = new BehaviorSubject(false);
   constructor() { }
+
 }
