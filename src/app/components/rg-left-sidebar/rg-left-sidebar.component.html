@@ -3,15 +3,47 @@
     [mode]="(isHandset$ | async) ? 'over' : 'side'" [opened]="(isHandset$ | async) === false">
     <mat-toolbar>Menu</mat-toolbar>
     <mat-nav-list>
-      <a mat-list-item href="#" *appHasPermission="['administrator']">
+
+      <a mat-list-item [routerLink]="['/dashboard/user-management']"
+      *appHasPermission="['administrator']">
         Administración Usuarios
       </a>
-      <a mat-list-item href="#" *appHasPermission="['administrator', 'jury']">
+
+      <a mat-list-item [routerLink]="['/dashboard/role-management']" 
+      *appHasPermission="['administrator']">
+        Administración Roles
+      </a>
+
+      <a mat-list-item [routerLink]="['/dashboard/permission-management']" 
+      *appHasPermission="['administrator']">
+        Administración Permisos
+      </a>
+
+      <a mat-list-item [routerLink]="['/dashboard/table-management']" 
+      *appHasPermission="['administrator', 'jury']">
         Administración Mesas
       </a>
-      <a mat-list-item href="#" *appHasPermission="['administrator', 'jury', 'cityzen']">
+
+      <a mat-list-item [routerLink]="['/dashboard/political-party-management']" 
+      *appHasPermission="['administrator']">
+        Administración Partidos
+      </a>
+
+      <a mat-list-item [routerLink]="['/dashboard/candidate-management']" 
+      *appHasPermission="['administrator']">
+        Administración Candidatos
+      </a>
+
+      <a mat-list-item [routerLink]="['/dashboard/result-management']" 
+      *appHasPermission="['administrator']">
+        Administración Resultados
+      </a>
+
+      <a mat-list-item [routerLink]="['/dashboard/reports']" 
+      *appHasPermission="['administrator', 'jury', 'cityzen']">
         Reportes
       </a>
+
     </mat-nav-list>
   </mat-sidenav>
 </mat-sidenav-container>
