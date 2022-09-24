@@ -54,14 +54,14 @@ export class AuthService {
         }
       }).pipe(map(body => {
         this.dataService.loadingScreen.next(false);
-        localStorage.setItem('username', body.username);
-        localStorage.setItem('role', body.role.name)
+        this.dataService.username.next(body.username);
+        localStorage.setItem('role', body.role.name);
         this.dataService.isLoggedIn.next(true);
         return true;
       }), catchError((err) => {
         this.dataService.loadingScreen.next(false);
         localStorage.removeItem('access_token');
-        localStorage.removeItem('username');
+        this.dataService.username.next('');
         localStorage.removeItem('role');
         this.dataService.isLoggedIn.next(false);
         return this.router.navigate(['/']);
@@ -75,10 +75,14 @@ export class AuthService {
 
   }
 
+  hasPermission(permissions: string[]): boolean{
+    return permissions.includes(localStorage.getItem('role')!);
+  }
+
   logout() {
     localStorage.removeItem('access_token');
-    localStorage.removeItem('username');
     localStorage.removeItem('role');
+    this.dataService.username.next('');
     this.dataService.isLoggedIn.next(false);
   }
 

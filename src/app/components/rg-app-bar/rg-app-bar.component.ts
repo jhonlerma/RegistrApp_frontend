@@ -22,8 +22,11 @@ export class RgAppBarComponent implements OnInit {
     this.username = ''
     this.dataService.isLoggedIn.subscribe(x => {
       this.isLoggedIn = x;
-      this.username = localStorage.getItem('username');
     });
+
+    this.dataService.username.subscribe(x => {
+      this.username = x;
+    })
 
   }
 

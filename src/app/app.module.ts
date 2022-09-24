@@ -38,6 +38,7 @@ import { RgPoliticalPartyManagementComponent } from './components/rg-political-p
 import { RgCandidateManagementComponent } from './components/rg-candidate-management/rg-candidate-management.component';
 import { RgResultManagementComponent } from './components/rg-result-management/rg-result-management.component';
 import { RgReportsViewerComponent } from './components/rg-reports-viewer/rg-reports-viewer.component';
+import { HasPermissionDirective } from './directives/has-permission.directive';
 
 @NgModule({
   declarations: [
@@ -57,6 +58,7 @@ import { RgReportsViewerComponent } from './components/rg-reports-viewer/rg-repo
     RgCandidateManagementComponent,
     RgResultManagementComponent,
     RgReportsViewerComponent,
+    HasPermissionDirective,
   ],
   imports: [
     BrowserModule,
