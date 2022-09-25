@@ -4,7 +4,7 @@ import { DataService } from "../data/data.service";
 import { environment } from "../../../environments/environment";
 import { catchError, from, map, Observable, ObservableInput, of, onErrorResumeNext, throwError } from "rxjs";
 import { LoginResponse } from 'src/app/models/auth/login-response';
-import { TOKEN } from 'src/app/constants';
+import { LOCAL_STORAGE_ROLE, LOCAL_STORAGE_TOKEN, LOCAL_STORAGE_USER } from 'src/app/constants';
 import { MeResponse } from 'src/app/models/auth/me-response';
 import { Router, UrlTree } from '@angular/router';
 
@@ -32,7 +32,7 @@ export class AuthService {
         this.dataService.loadingScreen.next(false);
         if (response.ok) {
           this.dataService.isLoggedIn.next(true);
-          localStorage.setItem(TOKEN, response.body?.access_token!)
+          localStorage.setItem(LOCAL_STORAGE_TOKEN, response.body?.access_token!)
         }
         return response.body!;
       }), catchError((err) => {
@@ -45,25 +45,27 @@ export class AuthService {
   authMe(): Observable<boolean | UrlTree> {
     this.dataService.loadingScreen.next(true);
     let response: Observable<boolean | UrlTree>;
-    if (localStorage.getItem('access_token') != null) {
+    if (localStorage.getItem(LOCAL_STORAGE_TOKEN) != null) {
 
       response = this.http.get<MeResponse>(`${environment.url}auth/me`, {
         observe: 'body',
         headers: {
-          'authorization': `Bearer ${localStorage.getItem('access_token')}`
+          'authorization': `Bearer ${localStorage.getItem(LOCAL_STORAGE_TOKEN)}`
         }
       }).pipe(map(body => {
-        this.dataService.loadingScreen.next(false);
+        localStorage.setItem(LOCAL_STORAGE_ROLE, body.role.name);
+        localStorage.setItem(LOCAL_STORAGE_USER, JSON.stringify(body));
         this.dataService.username.next(body.username);
-        localStorage.setItem('role', body.role.name);
         this.dataService.isLoggedIn.next(true);
+        this.dataService.loadingScreen.next(false);
         return true;
       }), catchError((err) => {
-        this.dataService.loadingScreen.next(false);
-        localStorage.removeItem('access_token');
+        localStorage.removeItem(LOCAL_STORAGE_TOKEN);
+        localStorage.removeItem(LOCAL_STORAGE_ROLE);
+        localStorage.removeItem(LOCAL_STORAGE_USER);
         this.dataService.username.next('');
-        localStorage.removeItem('role');
         this.dataService.isLoggedIn.next(false);
+        this.dataService.loadingScreen.next(false);
         return this.router.navigate(['/']);
       }))
     } else {
@@ -76,12 +78,19 @@ export class AuthService {
   }
 
   hasPermission(permissions: string[]): boolean{
-    return permissions.includes(localStorage.getItem('role')!);
+    return permissions.includes(localStorage.getItem(LOCAL_STORAGE_ROLE)!);
+  }
+
+  meInfo(){
+    const meUser: MeResponse = JSON.parse(localStorage.getItem(LOCAL_STORAGE_USER)!);
+    localStorage.removeItem(LOCAL_STORAGE_USER);
+    return of(meUser);
   }
 
   logout() {
-    localStorage.removeItem('access_token');
-    localStorage.removeItem('role');
+    localStorage.removeItem(LOCAL_STORAGE_TOKEN);
+    localStorage.removeItem(LOCAL_STORAGE_ROLE);
+    localStorage.removeItem(LOCAL_STORAGE_USER);
     this.dataService.username.next('');
     this.dataService.isLoggedIn.next(false);
   }
