@@ -93,7 +93,6 @@ import { RgDialogInputComponent } from './components/rg-dialog-input/rg-dialog-i
     HttpClientModule,
     MatGridListModule,
     MatTableModule,
-    MatTableModule,
   ],
   providers: [],
   bootstrap: [AppComponent]

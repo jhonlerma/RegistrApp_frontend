@@ -38,7 +38,6 @@ export class RgLoginComponent implements OnInit {
         },
         error: (err) => { this.snackBar.open(err, 'cerrar', { duration: 2000 }); }
       });
-    console.log(`peticion http ${JSON.stringify(this.loginForm.value)}`);
   }
 
   isInvalidField(field: string): any {

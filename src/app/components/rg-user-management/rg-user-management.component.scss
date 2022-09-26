@@ -1,33 +1,60 @@
-.login-card {
-    max-width: 400px;
-    align-self: center;
+:host{
+    display: flex;
+    justify-content: stretch;
+    align-content: stretch;
+    width: 100%;
+    height: 100%;
 }
 
-.login-header{
+.create-user-card {
+    display: flex;
+    flex-direction: column;
+    align-self: start;
+    margin: 32px;
+    max-width: 400px;
+}
+
+.create-user-header{
     justify-content: center;
 }
 
-.login-title{
+.create-user-title{
     font-weight: bold;
 }
 
-.login-logo{
+.create-user-logo{
     margin: auto;
     width: 256px;
 }
 
-.login-form{
+.create-user-form{
     padding: 24px;
 }
 
-.login-form-field{
+.create-user-form-field{
     display: flex;
 }
 
-.login-button{
+.create-user-button{
     display: flex;
     justify-content: center;
     margin-top: 24px;
     width: 100%;
 
+}
+
+.table-container{
+    height: 500px;
+    overflow-y: scroll;
+}
+ .table-cell{
+    padding-left: 24px;
+ }
+
+.edit-icon{
+    color: #FFDE03;
+}
+
+.delete-icon{
+    color: #FF0266;
 }

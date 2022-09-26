@@ -16,6 +16,7 @@ import { RgUserManagementComponent } from './components/rg-user-management/rg-us
 import { AuthGuard } from './guards/auth/auth.guard';
 import { NoAuthGuard } from './guards/auth/no-auth.guard';
 import { RoleGuard } from './guards/role/role.guard';
+import { UserListResolver } from './resolvers/user-list/user-list.resolver';
 import { UserResolver } from './resolvers/user/user.resolver';
 
 const routes: Routes = [
@@ -47,6 +48,9 @@ const routes: Routes = [
           roles: ['administrator']
         },
         canActivate: [RoleGuard],
+        resolve: {
+          response: UserListResolver,
+        },
         path: 'user-management',
         component: RgUserManagementComponent
       },
