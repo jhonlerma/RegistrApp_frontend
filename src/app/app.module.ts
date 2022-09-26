@@ -22,7 +22,8 @@ import { MatMenuModule } from '@angular/material/menu';
 import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 import { MatFormFieldModule } from "@angular/material/form-field";
 import { MatSnackBarModule } from "@angular/material/snack-bar";
-import { MatTableModule } from '@angular/material/table'
+import { MatTableModule } from '@angular/material/table';
+import { MatSelectModule } from '@angular/material/select';
 
 import { AppComponent } from './app.component';
 import { RgLoginComponent } from './components/rg-login/rg-login.component';
@@ -93,6 +94,7 @@ import { RgDialogInputComponent } from './components/rg-dialog-input/rg-dialog-i
     HttpClientModule,
     MatGridListModule,
     MatTableModule,
+    MatSelectModule,
   ],
   providers: [],
   bootstrap: [AppComponent]

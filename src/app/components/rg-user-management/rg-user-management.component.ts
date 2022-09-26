@@ -4,6 +4,7 @@ import { MatPaginator } from '@angular/material/paginator';
 import { MatSort } from '@angular/material/sort';
 import { MatTableDataSource } from '@angular/material/table';
 import { ActivatedRoute } from '@angular/router';
+import { Role } from 'src/app/models/auth/role-response';
 import { User } from 'src/app/models/user';
 import { UserDataService } from 'src/app/services/user-data/user-data.service';
 
@@ -19,8 +20,10 @@ export class RgUserManagementComponent {
   createUserForm = new FormGroup({
     email: new FormControl("", [Validators.required, Validators.email]),
     username: new FormControl("", [Validators.required]),
-    password: new FormControl("", [Validators.required]),
-    passwordConfirm: new FormControl("", [Validators.required])
+    password: new FormControl("", [Validators.required, Validators.minLength(8)]),
+    passwordConfirm: new FormControl("", [Validators.required, Validators.minLength(8)]),
+    role: new FormControl("", [Validators.required, Validators.minLength(8)]),
+
   });
 
   resultsLength = 0;
@@ -29,11 +32,16 @@ export class RgUserManagementComponent {
   displayedColumns: string[] = ['Email', 'Nombre Usuario', 'Rol', 'Editar', 'Eliminar'];
   dataSource: MatTableDataSource<User>;
 
+  roles: Role[]=[];
+
   showPasswordIcon: string = 'visibility_off';
   showPasswordConfirmIcon: string = 'visibility_off';
 
   constructor(private userDataService: UserDataService, private route: ActivatedRoute) {
     this.userList = this.route.snapshot.data['response'];
+    this.roles = this.route.snapshot.data['roles'];
+    console.log(this.roles);
+    
     this.dataSource = new MatTableDataSource(this.userList);
   }
 
