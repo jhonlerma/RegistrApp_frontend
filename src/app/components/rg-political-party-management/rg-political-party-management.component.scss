@@ -1,0 +1,21 @@
+html{
+    scroll-behavior: smooth;
+}
+
+body{
+    font-family: 'Roboto', sans-serif;
+    margin: 0;
+}
+h1{ font-size: 4em;
+    font-weight: bold;
+    padding: 10px 30px;
+    border-radius: 5px;
+    color: rgb(69, 69, 221);
+    text-align: center;
+}
+
+button{
+    font-size: 1em;
+    padding: 6px 10px;
+    border-radius: 8px;
+}

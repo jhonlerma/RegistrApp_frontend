@@ -9,6 +9,7 @@ import { AppRoutingModule } from './app-routing.module';
 
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { LayoutModule } from '@angular/cdk/layout';
+import { MatDialogModule } from '@angular/material/dialog'
 import { MatToolbarModule } from '@angular/material/toolbar';
 import { MatButtonModule } from '@angular/material/button';
 import { MatSidenavModule } from '@angular/material/sidenav';
@@ -40,6 +41,14 @@ import { RgResultManagementComponent } from './components/rg-result-management/r
 import { RgReportsViewerComponent } from './components/rg-reports-viewer/rg-reports-viewer.component';
 import { HasPermissionDirective } from './directives/has-permission.directive';
 
+
+import { HttpClient } from '@angular/common/http';
+import { MatGridList } from '@angular/material/grid-list';
+import { MatTableModule } from '@angular/material/table';
+import { RgPoliticalPartyGetAllComponent } from './components/rg-political-party-get-all/rg-political-party-get-all.component';
+import { RgPoliticalPartyGetIdComponent } from './components/rg-political-party-get-id/rg-political-party-get-id.component';
+import { RgDialogInputComponent } from './components/rg-dialog-input/rg-dialog-input.component';
+
 @NgModule({
   declarations: [
     AppComponent,
@@ -59,6 +68,9 @@ import { HasPermissionDirective } from './directives/has-permission.directive';
     RgResultManagementComponent,
     RgReportsViewerComponent,
     HasPermissionDirective,
+    RgPoliticalPartyGetAllComponent,
+    RgPoliticalPartyGetIdComponent,
+    RgDialogInputComponent,
   ],
   imports: [
     BrowserModule,
@@ -68,6 +80,7 @@ import { HasPermissionDirective } from './directives/has-permission.directive';
     BrowserAnimationsModule,
     LayoutModule,
     FlexLayoutModule,
+    MatDialogModule,
     MatToolbarModule,
     MatButtonModule,
     MatSidenavModule,
@@ -80,6 +93,9 @@ import { HasPermissionDirective } from './directives/has-permission.directive';
     MatFormFieldModule,
     MatInputModule,
     MatSnackBarModule,
+    HttpClientModule,
+    MatGridListModule,
+    MatTableModule,
   ],
   providers: [],
   bootstrap: [AppComponent]
