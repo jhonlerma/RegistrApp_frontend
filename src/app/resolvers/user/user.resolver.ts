@@ -5,12 +5,19 @@ import {
   ActivatedRouteSnapshot
 } from '@angular/router';
 import { Observable, of } from 'rxjs';
+import { MeResponse } from 'src/app/models/auth/me-response';
+import { AuthService } from 'src/app/services/auth/auth.service';
 
 @Injectable({
   providedIn: 'root'
 })
-export class UserResolver implements Resolve<boolean> {
-  resolve(route: ActivatedRouteSnapshot, state: RouterStateSnapshot): Observable<boolean> {
-    return of(true);
+export class UserResolver implements Resolve<MeResponse> {
+
+  constructor(private authService: AuthService){
+
+  }
+
+  resolve(route: ActivatedRouteSnapshot, state: RouterStateSnapshot): Observable<MeResponse> {
+    return this.authService.meInfo();
   }
 }

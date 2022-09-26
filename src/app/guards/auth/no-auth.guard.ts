@@ -1,6 +1,7 @@
 import { Injectable } from '@angular/core';
 import { ActivatedRouteSnapshot, CanActivate, Router, RouterStateSnapshot, UrlTree } from '@angular/router';
 import { Observable } from 'rxjs';
+import { LOCAL_STORAGE_TOKEN } from 'src/app/constants';
 import { AuthService } from 'src/app/services/auth/auth.service';
 import { DataService } from 'src/app/services/data/data.service';
 
@@ -18,7 +19,7 @@ export class NoAuthGuard implements CanActivate {
     state: RouterStateSnapshot): Observable<boolean | UrlTree> | Promise<boolean | UrlTree> | boolean | UrlTree {
     this.dataService.loadingScreen.next(true);
     let response: Promise<boolean> | boolean;
-    if (localStorage.getItem('access_token') != null) {
+    if (localStorage.getItem(LOCAL_STORAGE_TOKEN) != null) {
       this.dataService.loadingScreen.next(false);
       response = this.router.navigate(['/', 'dashboard']);
     } else {

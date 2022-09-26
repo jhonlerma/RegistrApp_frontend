@@ -15,13 +15,15 @@ import { RgTableManagementComponent } from './components/rg-table-management/rg-
 import { RgUserManagementComponent } from './components/rg-user-management/rg-user-management.component';
 import { AuthGuard } from './guards/auth/auth.guard';
 import { NoAuthGuard } from './guards/auth/no-auth.guard';
+import { RoleGuard } from './guards/role/role.guard';
+import { UserResolver } from './resolvers/user/user.resolver';
 
 const routes: Routes = [
   {
     path: '',
     canActivate: [NoAuthGuard],
     component: RgPublicMainComponent,
-    children:[
+    children: [
       {
         path: '',
         component: RgLoginComponent
@@ -32,45 +34,85 @@ const routes: Routes = [
     path: 'dashboard',
     canActivate: [AuthGuard],
     component: RgPrivateMainComponent,
-    children:[
+    children: [
       {
-        path:'',
+        path: '',
+        resolve: {
+          response: UserResolver,
+        },
         component: RgDashboardComponent
       },
       {
-        path:'user-management',
+        data: {
+          roles: ['administrator']
+        },
+        canActivate: [RoleGuard],
+        path: 'user-management',
         component: RgUserManagementComponent
       },
       {
-        path:'role-management',
+        data: {
+          roles: ['administrator']
+        },
+        canActivate: [RoleGuard],
+        path: 'role-management',
         component: RgRoleManagementComponent
       },
       {
-        path:'permission-management',
+        data: {
+          roles: ['administrator']
+        },
+        canActivate: [RoleGuard],
+        path: 'permission-management',
         component: RgPermissionManagementComponent
       },
       {
-        path:'table-management',
+        data: {
+          roles: ['administrator', 'jury']
+        },
+        canActivate: [RoleGuard],
+        path: 'table-management',
         component: RgTableManagementComponent
       },
       {
-        path:'political-party-management',
+        data: {
+          roles: ['administrator']
+        },
+        canActivate: [RoleGuard],
+
+        path: 'political-party-management',
         component: RgPoliticalPartyManagementComponent
       },
       {
-        path:'candidate-management',
+        data: {
+          roles: ['administrator']
+        },
+        canActivate: [RoleGuard],
+        path: 'candidate-management',
         component: RgCandidateManagementComponent
       },
       {
-        path:'result-management',
+        data: {
+          roles: ['administrator']
+        },
+        canActivate: [RoleGuard],
+        path: 'result-management',
         component: RgResultManagementComponent
       },
       {
-        path:'reports',
+        data: {
+          roles: ['administrator', 'jury', 'cityzen']
+        },
+        canActivate: [RoleGuard],
+        path: 'reports',
         component: RgReportsViewerComponent
       },
-      
+
     ]
+  },
+  {
+    path: 'not-found',
+    component: RgNotFoundComponent
   },
   {
     path: '**',

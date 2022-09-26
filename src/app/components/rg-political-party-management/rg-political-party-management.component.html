@@ -1,1 +1,20 @@
-<p>rg-political-party-management works!</p>
+<section class="Titulo">
+  <h1> Partidos Politicos </h1>
+</section>
+
+<section class="Getters">
+  <button mat-raised-button [matMenuTriggerFor]="menu">Consultar</button>
+  <mat-menu #menu="matMenu">
+    <button mat-menu-item (click)="openGetAll()">Consultar todos</button>
+    <button mat-menu-item (click)="openGetID()">Consultar por ID</button>
+  </mat-menu>
+</section>
+
+<section class="Setters">
+  <br>
+  <button mat-raised-button (click)="openAgregar()">Agregar</button>
+  <br><br>
+  <button mat-raised-button (click)="openActualizar()">Actualizar</button>
+  <br><br>
+  <button mat-raised-button (click)="openEliminar()">Eliminar</button>
+</section>

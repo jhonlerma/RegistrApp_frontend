@@ -9,6 +9,7 @@ import { AppRoutingModule } from './app-routing.module';
 
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { LayoutModule } from '@angular/cdk/layout';
+import { MatDialogModule } from '@angular/material/dialog'
 import { MatToolbarModule } from '@angular/material/toolbar';
 import { MatButtonModule } from '@angular/material/button';
 import { MatSidenavModule } from '@angular/material/sidenav';
@@ -21,6 +22,7 @@ import { MatMenuModule } from '@angular/material/menu';
 import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 import { MatFormFieldModule } from "@angular/material/form-field";
 import { MatSnackBarModule } from "@angular/material/snack-bar";
+import { MatTableModule } from '@angular/material/table'
 
 import { AppComponent } from './app.component';
 import { RgLoginComponent } from './components/rg-login/rg-login.component';
@@ -39,6 +41,10 @@ import { RgCandidateManagementComponent } from './components/rg-candidate-manage
 import { RgResultManagementComponent } from './components/rg-result-management/rg-result-management.component';
 import { RgReportsViewerComponent } from './components/rg-reports-viewer/rg-reports-viewer.component';
 import { HasPermissionDirective } from './directives/has-permission.directive';
+
+import { RgPoliticalPartyGetAllComponent } from './components/rg-political-party-get-all/rg-political-party-get-all.component';
+import { RgPoliticalPartyGetIdComponent } from './components/rg-political-party-get-id/rg-political-party-get-id.component';
+import { RgDialogInputComponent } from './components/rg-dialog-input/rg-dialog-input.component';
 
 @NgModule({
   declarations: [
@@ -59,6 +65,9 @@ import { HasPermissionDirective } from './directives/has-permission.directive';
     RgResultManagementComponent,
     RgReportsViewerComponent,
     HasPermissionDirective,
+    RgPoliticalPartyGetAllComponent,
+    RgPoliticalPartyGetIdComponent,
+    RgDialogInputComponent,
   ],
   imports: [
     BrowserModule,
@@ -68,6 +77,7 @@ import { HasPermissionDirective } from './directives/has-permission.directive';
     BrowserAnimationsModule,
     LayoutModule,
     FlexLayoutModule,
+    MatDialogModule,
     MatToolbarModule,
     MatButtonModule,
     MatSidenavModule,
@@ -80,6 +90,10 @@ import { HasPermissionDirective } from './directives/has-permission.directive';
     MatFormFieldModule,
     MatInputModule,
     MatSnackBarModule,
+    HttpClientModule,
+    MatGridListModule,
+    MatTableModule,
+    MatTableModule,
   ],
   providers: [],
   bootstrap: [AppComponent]
