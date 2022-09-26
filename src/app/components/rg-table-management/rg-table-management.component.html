@@ -1,1 +1,44 @@
-<p>rg-table-management works!</p>
+<mat-card class="table-card">
+    <mat-card-header class="table-header">
+        <mat-card-title class="table-title">Administración de mesas</mat-card-title>
+        <img class="table-logo" mat-card-image src="../../../assets/images/logo.webp" alt="Photo of a Shiba Inu">
+    </mat-card-header>
+    <mat-divider></mat-divider>
+
+    <mat-card-content class="table-form">
+        <form [formGroup]="tableForm" (ngSubmit)="tableSubmit()">
+            <br>
+            <mat-label class="table-label">Registro de mesas</mat-label>
+            <p>
+                <mat-form-field appearance="outline">
+                    <mat-label>Numero de mesa</mat-label>
+                    <input formControlName="nTable" name="nTable" matInput placeholder="100" table-input>
+                    <mat-icon matSuffix>dialpad</mat-icon>
+                    <mat-hint>Identificador de la mesa</mat-hint>
+                </mat-form-field>
+            </p>
+            <p>
+                <mat-form-field appearance="outline">
+                    <mat-label>Personas Registradas</mat-label>
+                    <input formControlName="nPersonTable" name="nPersonTable" matInput placeholder="Placeholder" table-input>
+                    <mat-icon matSuffix>people</mat-icon>
+                    <mat-hint>Personas registadas en la mesa</mat-hint>
+                </mat-form-field>
+            </p>
+            <button class="table-button-create" type="submit" mat-raised-button color="accent">Registrar</button>
+
+            <br>
+            <br>
+        </form>
+
+
+
+
+        <mat-divider></mat-divider>
+
+
+
+
+    </mat-card-content>
+
+</mat-card>
