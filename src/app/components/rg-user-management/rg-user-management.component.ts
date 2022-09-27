@@ -7,6 +7,7 @@ import { ActivatedRoute } from '@angular/router';
 import { Role } from 'src/app/models/auth/role-response';
 import { User } from 'src/app/models/user';
 import { UserDataService } from 'src/app/services/user-data/user-data.service';
+import { PasswordConfirmValidator } from 'src/app/validators/password-confirm.validator';
 
 @Component({
   selector: 'app-rg-user-management',
@@ -23,7 +24,6 @@ export class RgUserManagementComponent {
     password: new FormControl("", [Validators.required, Validators.minLength(8)]),
     passwordConfirm: new FormControl("", [Validators.required, Validators.minLength(8)]),
     role: new FormControl("", [Validators.required, Validators.minLength(8)]),
-
   });
 
   resultsLength = 0;
@@ -58,6 +58,7 @@ export class RgUserManagementComponent {
   }
 
   hasError(field: string, validation: string) {
+    console.log(this.createUserForm.get(field)?.errors);
     return this.createUserForm.get(field)?.hasError(validation);
   }
 

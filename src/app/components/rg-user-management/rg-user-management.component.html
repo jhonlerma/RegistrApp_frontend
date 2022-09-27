@@ -38,6 +38,11 @@
           badge
         </mat-icon>  
         <mat-hint>Seleccione un rol</mat-hint>
+
+        <mat-error *ngIf="isInvalidField('role')">
+          <span *ngIf="hasError('role', 'required')">El campo es requerido</span>
+        </mat-error>
+
       </mat-form-field>
 
       <mat-form-field class="create-user-form-field" appearance="standard">
@@ -49,7 +54,8 @@
         <mat-hint>Cree una contraseña para iniciar sesión</mat-hint>
 
         <mat-error *ngIf="isInvalidField('password')">
-          <span *ngIf="hasError('pasword', 'required')">El campo es requerido</span>
+          <span *ngIf="hasError('password', 'required')">El campo es requerido</span>
+          <span *ngIf="hasError('password', 'minlength')">El campo debe tener 8 o mas caracteres</span>
         </mat-error>
       </mat-form-field>
 
@@ -61,8 +67,9 @@
           {{showPasswordConfirmIcon}}</mat-icon>
         <mat-hint>Repita la contraseña</mat-hint>
 
-        <mat-error *ngIf="isInvalidField('password')">
-          <span *ngIf="hasError('pasword', 'required')">El campo es requerido</span>
+        <mat-error *ngIf="isInvalidField('passwordConfirm')">
+          <span *ngIf="hasError('passwordConfirm', 'required')">El campo es requerido</span>
+          <span *ngIf="hasError('passwordConfirm', 'minlength')">El campo debe tener 8 o mas caracteres</span>
         </mat-error>
       </mat-form-field>
 
