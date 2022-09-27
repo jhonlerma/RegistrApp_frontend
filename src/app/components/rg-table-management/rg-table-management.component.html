@@ -13,26 +13,26 @@
             <p>
                 <mat-form-field appearance="outline">
                     <mat-label>Numero de mesa</mat-label>
-                    <input formControlName="numberTable" name="numberTable" matInput placeholder="100" table-input>
+                    <input formControlName="numero" name="numero" matInput placeholder="100" table-input>
                     <mat-icon matSuffix>dialpad</mat-icon>
                     <mat-hint>Identificador de la mesa</mat-hint>
                 </mat-form-field>
 
-                <mat-error *ngIf="isInvalidField('numberTable')">
-                    <span *ngIf="hasError('numberTable', 'required')">El campo es requerido</span>
+                <mat-error *ngIf="isInvalidField('numero')">
+                    <span *ngIf="hasError('numero', 'required')">El campo es requerido</span>
                 </mat-error>
             </p>
             <p>
                 <mat-form-field appearance="outline">
                     <mat-label>Personas Registradas</mat-label>
-                    <input formControlName="nPersonTable" name="nPersonTable" matInput placeholder="Placeholder"
+                    <input formControlName="cantidad_inscritos" name="cantidad_inscritos" matInput placeholder="Placeholder"
                         table-input>
                     <mat-icon matSuffix>people</mat-icon>
                     <mat-hint>Personas registadas en la mesa</mat-hint>
                 </mat-form-field>
 
-                <mat-error *ngIf="isInvalidField('nPersonTable')">
-                    <span *ngIf="hasError('nPersonTable', 'required')">El campo es requerido</span>
+                <mat-error *ngIf="isInvalidField('cantidad_inscritos')">
+                    <span *ngIf="hasError('cantidad_inscritos', 'required')">El campo es requerido</span>
                 </mat-error>
 
             </p>
