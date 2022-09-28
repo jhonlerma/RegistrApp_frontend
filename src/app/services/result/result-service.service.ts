@@ -4,6 +4,7 @@ import { HttpClient } from '@angular/common/http';
 import { Table } from 'src/app/models/table';
 import { DataService } from '../data/data.service';
 import { LOCAL_STORAGE_TOKEN } from 'src/app/constants';
+import { ResultModelo } from 'src/app/models/result-modelo';
 
 
 @Injectable({
@@ -14,9 +15,9 @@ export class ResultServiceService {
 
   constructor(private http: HttpClient, private dataService:DataService) { }
 
-  public getAll(): Observable<Table[]>{
+  public getAll(): Observable<ResultModelo[]>{
     this.dataService.loadingScreen.next(true);
-    return this.http.get<any[] | Table[]>(this.API_DATOS,{
+    return this.http.get<any[] | ResultModelo[]>(this.API_DATOS,{
       observe: 'body',
       headers: {
         'authorization': `Bearer ${localStorage.getItem(LOCAL_STORAGE_TOKEN)}`
