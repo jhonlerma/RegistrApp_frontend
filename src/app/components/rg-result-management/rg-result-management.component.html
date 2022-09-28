@@ -1,1 +1,43 @@
-<p>rg-result-management works!</p>
+<mat-card class="table-card">
+    <mat-card-header class="table-header">
+        <mat-card-title class="table-title">Resultados</mat-card-title>
+        <img class="table-logo" mat-card-image src="../../../assets/images/logo.webp" alt="Photo of a Shiba Inu">
+    </mat-card-header>
+    <mat-divider></mat-divider>
+
+    <mat-card-content class="table-form">
+    </mat-card-content>
+    <mat-card-content>
+        <mat-divider></mat-divider>
+        <br>
+        <mat-label class="table-label">Resultados obtenidos</mat-label>
+        <br>
+        <br>
+        <table mat-table [dataSource]="dataSource" class="mat-elevation-z8">
+
+            <ng-container matColumnDef="name">
+                <th mat-header-cell *matHeaderCellDef> Nombres </th>
+                <td mat-cell *matCellDef="let element"> {{element.candidate.name}} </td>
+            </ng-container>
+
+            <ng-container matColumnDef="last_name">
+                <th mat-header-cell *matHeaderCellDef> Apellidos </th>
+                <td mat-cell *matCellDef="let element"> {{element.candidate.last_name}} </td>
+            </ng-container>          
+
+            <ng-container matColumnDef="nombre">
+                <th mat-header-cell *matHeaderCellDef> Partido </th>
+                <td mat-cell *matCellDef="let element"> {{element.candidate.political_party.nombre}} </td>
+            </ng-container>
+
+            <ng-container matColumnDef="numero">
+                <th mat-header-cell *matHeaderCellDef> Mesa </th>
+                <td mat-cell *matCellDef="let element"> {{element.table.numero}} </td>
+            </ng-container>
+           
+            <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+            <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+        </table>
+    </mat-card-content>
+
+</mat-card>

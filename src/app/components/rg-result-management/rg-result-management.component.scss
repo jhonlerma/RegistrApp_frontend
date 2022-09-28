@@ -1,0 +1,86 @@
+:host{
+   
+    justify-content: center;
+    align-content: center;
+    width: 100%;
+    height: 100%;
+}
+.table-card {
+   align-self: start;
+}
+.table-header {
+    justify-content: start;
+}
+.table-title{
+    margin-top: 30px;
+    font-weight: bold;
+    align-self: start;
+    margin-left: 10px;
+    
+}
+.table-label{
+    margin-top: 30px;
+    font-weight: bold;
+    align-self: start;
+    margin-left: 10px; 
+}
+.table-logo{
+    margin: auto;
+    width: 120px;
+    align-self: center;
+    margin: 0px;
+}
+.table-button{
+    display: flex;
+    justify-content: center;
+    margin-top: 0px;
+    margin-left: 0px;
+    margin-right: 10px;
+    
+}
+.table-button{
+    display: inline-block;
+    
+    margin-top: 10px;
+    margin-left: 10px;
+    margin-right: 10px;
+    margin-bottom: 10px;
+}
+
+.demo-table {
+    width: 100%;
+  }
+
+  body{
+    font-family: 'Roboto', sans-serif;
+    margin: 0;
+    }
+  
+  th{font-size: 2em;
+    color: white;
+    background-color: rgb(255, 64, 129);
+    }
+
+  td{font-size: 1.5em;}
+
+  .mat-column-_id {
+    
+    border-right: 1.5px solid rgb(216, 216, 216);
+    padding: 10px 20px;
+    text-align: center;
+  }
+  
+  .mat-column-number {
+    
+    border-right: 1.5px solid rgb(216, 216, 216);
+    padding: 10px 20px;
+    text-align: center;
+  }
+  
+  .mat-column-numberp {
+    
+    border-right: 1.5px solid rgb(216, 216, 216);
+    padding: 10px 20px;
+    text-align: center;
+  }
+  
