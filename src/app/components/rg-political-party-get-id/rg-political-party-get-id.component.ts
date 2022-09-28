@@ -16,7 +16,6 @@ export class RgPoliticalPartyGetIdComponent implements OnInit {
   ngOnInit(): void {
     this.service.getAll().subscribe(dataSource => {
       this.dataSource = dataSource;
-      console.log(this.dataSource);
       this.dataSource = this.dataSource;
     })
   }
