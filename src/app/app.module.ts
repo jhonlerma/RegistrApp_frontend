@@ -46,6 +46,7 @@ import { HasPermissionDirective } from './directives/has-permission.directive';
 import { RgPoliticalPartyGetAllComponent } from './components/rg-political-party-get-all/rg-political-party-get-all.component';
 import { RgPoliticalPartyGetIdComponent } from './components/rg-political-party-get-id/rg-political-party-get-id.component';
 import { RgDialogInputComponent } from './components/rg-dialog-input/rg-dialog-input.component';
+import { RgDialogUpdateUserComponent } from './components/rg-dialog-update-user/rg-dialog-update-user.component';
 
 @NgModule({
   declarations: [
@@ -69,6 +70,7 @@ import { RgDialogInputComponent } from './components/rg-dialog-input/rg-dialog-i
     RgPoliticalPartyGetAllComponent,
     RgPoliticalPartyGetIdComponent,
     RgDialogInputComponent,
+    RgDialogUpdateUserComponent,
   ],
   imports: [
     BrowserModule,

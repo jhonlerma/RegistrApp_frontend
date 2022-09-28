@@ -1,5 +1,6 @@
 import { AfterViewInit, Component, OnInit, ViewChild } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
+import { MatDialog } from '@angular/material/dialog';
 import { MatPaginator } from '@angular/material/paginator';
 import { MatSort } from '@angular/material/sort';
 import { MatTableDataSource } from '@angular/material/table';
@@ -8,6 +9,7 @@ import { Role } from 'src/app/models/auth/role-response';
 import { User } from 'src/app/models/user';
 import { UserDataService } from 'src/app/services/user-data/user-data.service';
 import { PasswordConfirmValidator } from 'src/app/validators/password-confirm.validator';
+import { RgDialogUpdateUserComponent } from '../rg-dialog-update-user/rg-dialog-update-user.component';
 
 @Component({
   selector: 'app-rg-user-management',
@@ -33,11 +35,12 @@ export class RgUserManagementComponent {
   dataSource: MatTableDataSource<User>;
 
   roles: Role[]=[];
+  selectedOption: string | null ='';
 
   showPasswordIcon: string = 'visibility_off';
   showPasswordConfirmIcon: string = 'visibility_off';
 
-  constructor(private userDataService: UserDataService, private route: ActivatedRoute) {
+  constructor(private userDataService: UserDataService, private route: ActivatedRoute, public dialog: MatDialog) {
     this.userList = this.route.snapshot.data['response'];
     this.roles = this.route.snapshot.data['roles'];
     console.log(this.roles);
@@ -83,12 +86,28 @@ export class RgUserManagementComponent {
     this.dataSource.filter = filterValue.trim().toLowerCase();
   }
 
-  startEdit(id: string) {
-    alert(`vas a editar el elemento con el id: ${id}`)
+  startEdit(user: User) {
+    this.openUserUpdateDialog(user);
   }
 
   startDeletion(id: string) {
     alert(`vas a eliminar el elemento con el id: ${id}`)
   }
+
+  openUserUpdateDialog(user: User):void{
+    const dialogRef = this.dialog.open(RgDialogUpdateUserComponent, {},);
+    dialogRef.componentInstance.roles = this.roles;
+    dialogRef.componentInstance.updateUserForm.get('username')?.setValue(user.username);
+    dialogRef.componentInstance.updateUserForm.get('role')?.setValue(user.role.id);
+    dialogRef.componentInstance.userId = user.id;
+
+    dialogRef.afterClosed().subscribe(result => {
+      console.log(result);
+      if (result){
+        console.log("La consulta fue realizada con exito");
+      }"La consulta no fue realizada con exito"
+    });
+  }
+
 
 }
