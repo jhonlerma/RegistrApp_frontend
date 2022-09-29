@@ -2,6 +2,7 @@ import { AfterViewInit, Component, OnInit, ViewChild } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { MatDialog } from '@angular/material/dialog';
 import { MatPaginator } from '@angular/material/paginator';
+import { MatSnackBar } from '@angular/material/snack-bar';
 import { MatSort } from '@angular/material/sort';
 import { MatTableDataSource } from '@angular/material/table';
 import { ActivatedRoute } from '@angular/router';
@@ -34,17 +35,22 @@ export class RgUserManagementComponent {
   displayedColumns: string[] = ['Email', 'Nombre Usuario', 'Rol', 'Editar', 'Eliminar'];
   dataSource: MatTableDataSource<User>;
 
-  roles: Role[]=[];
-  selectedOption: string | null ='';
+  roles: Role[] = [];
+  selectedOption: string | null = '';
 
   showPasswordIcon: string = 'visibility_off';
   showPasswordConfirmIcon: string = 'visibility_off';
 
-  constructor(private userDataService: UserDataService, private route: ActivatedRoute, public dialog: MatDialog) {
+  constructor(
+    private userDataService: UserDataService,
+    private route: ActivatedRoute,
+    public dialog: MatDialog,
+    private snackBar: MatSnackBar,
+  ) {
     this.userList = this.route.snapshot.data['response'];
     this.roles = this.route.snapshot.data['roles'];
     console.log(this.roles);
-    
+
     this.dataSource = new MatTableDataSource(this.userList);
   }
 
@@ -53,6 +59,22 @@ export class RgUserManagementComponent {
   }
 
   createUserSubmit() {
+
+    if (this.createUserForm.valid) {
+      this.userDataService.createUser(
+        this.createUserForm.value['email']!,
+        this.createUserForm.value['password']!,
+        this.createUserForm.value['role']!,
+        this.createUserForm.value['username']!
+      ).subscribe({
+        next: (response) => {
+          this.snackBar.open(`Creacion de usuario exitoso: ${response.email}`, 'cerrar', { duration: 2000 });
+        },
+        error: (err) => { console.log(err);
+        
+          this.snackBar.open(err.error, 'cerrar', { duration: 2000 }); }
+      });
+    }
 
   }
 
@@ -94,7 +116,7 @@ export class RgUserManagementComponent {
     alert(`vas a eliminar el elemento con el id: ${id}`)
   }
 
-  openUserUpdateDialog(user: User):void{
+  openUserUpdateDialog(user: User): void {
     const dialogRef = this.dialog.open(RgDialogUpdateUserComponent, {},);
     dialogRef.componentInstance.roles = this.roles;
     dialogRef.componentInstance.updateUserForm.get('username')?.setValue(user.username);
@@ -103,9 +125,9 @@ export class RgUserManagementComponent {
 
     dialogRef.afterClosed().subscribe(result => {
       console.log(result);
-      if (result){
+      if (result) {
         console.log("La consulta fue realizada con exito");
-      }"La consulta no fue realizada con exito"
+      } "La consulta no fue realizada con exito"
     });
   }
 

@@ -1,6 +1,7 @@
 import { Component, Inject, OnInit } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
+import { MatSnackBar } from '@angular/material/snack-bar';
 import { ActivatedRoute } from '@angular/router';
 import { Role } from 'src/app/models/auth/role-response';
 import { User } from 'src/app/models/user';
@@ -26,7 +27,7 @@ export class RgDialogUpdateUserComponent implements OnInit {
   userId: string ='';
 
   constructor(private userDataService: UserDataService, public dialogRef: MatDialogRef<RgDialogInputComponent>,
-    @Inject(MAT_DIALOG_DATA) public ID: DialogData) {
+    @Inject(MAT_DIALOG_DATA) public ID: DialogData, private snackBar: MatSnackBar) {
   }
 
   ngOnInit(): void {
@@ -34,6 +35,22 @@ export class RgDialogUpdateUserComponent implements OnInit {
   }
 
   updateUserSubmit() {
+    if (this.updateUserForm.valid) {
+      this.userDataService.updateUser(
+        this.userId,
+        this.updateUserForm.value['role']!,
+        this.updateUserForm.value['username']!
+      ).subscribe({
+        next: (response) => {
+          this.snackBar.open(`Creacion de usuario exitoso: ${response.email}`, 'cerrar', { duration: 2000 });
+        },
+        error: (err) => { console.log(err);
+        
+          this.snackBar.open(err.error, 'cerrar', { duration: 2000 }); }
+      });
+
+
+    }
 
   }
 
