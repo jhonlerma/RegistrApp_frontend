@@ -22,7 +22,8 @@ import { MatMenuModule } from '@angular/material/menu';
 import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 import { MatFormFieldModule } from "@angular/material/form-field";
 import { MatSnackBarModule } from "@angular/material/snack-bar";
-import { MatTableModule } from '@angular/material/table'
+import { MatTableModule } from '@angular/material/table';
+import { MatSelectModule } from '@angular/material/select';
 
 import { AppComponent } from './app.component';
 import { RgLoginComponent } from './components/rg-login/rg-login.component';
@@ -45,6 +46,7 @@ import { HasPermissionDirective } from './directives/has-permission.directive';
 import { RgPoliticalPartyGetAllComponent } from './components/rg-political-party-get-all/rg-political-party-get-all.component';
 import { RgPoliticalPartyGetIdComponent } from './components/rg-political-party-get-id/rg-political-party-get-id.component';
 import { RgDialogInputComponent } from './components/rg-dialog-input/rg-dialog-input.component';
+import { RgDialogUpdateUserComponent } from './components/rg-dialog-update-user/rg-dialog-update-user.component';
 
 @NgModule({
   declarations: [
@@ -68,6 +70,7 @@ import { RgDialogInputComponent } from './components/rg-dialog-input/rg-dialog-i
     RgPoliticalPartyGetAllComponent,
     RgPoliticalPartyGetIdComponent,
     RgDialogInputComponent,
+    RgDialogUpdateUserComponent,
   ],
   imports: [
     BrowserModule,
@@ -93,7 +96,7 @@ import { RgDialogInputComponent } from './components/rg-dialog-input/rg-dialog-i
     HttpClientModule,
     MatGridListModule,
     MatTableModule,
-    MatTableModule,
+    MatSelectModule,
   ],
   providers: [],
   bootstrap: [AppComponent]

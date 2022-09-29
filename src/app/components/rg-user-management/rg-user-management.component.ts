@@ -1,48 +1,93 @@
-import { Component, OnInit } from '@angular/core';
+import { AfterViewInit, Component, OnInit, ViewChild } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
+import { MatDialog } from '@angular/material/dialog';
+import { MatPaginator } from '@angular/material/paginator';
+import { MatSnackBar } from '@angular/material/snack-bar';
+import { MatSort } from '@angular/material/sort';
 import { MatTableDataSource } from '@angular/material/table';
+import { ActivatedRoute } from '@angular/router';
+import { Role } from 'src/app/models/auth/role-response';
 import { User } from 'src/app/models/user';
+import { UserDataService } from 'src/app/services/user-data/user-data.service';
+import { PasswordConfirmValidator } from 'src/app/validators/password-confirm.validator';
+import { RgDialogUpdateUserComponent } from '../rg-dialog-update-user/rg-dialog-update-user.component';
 
 @Component({
   selector: 'app-rg-user-management',
   templateUrl: './rg-user-management.component.html',
   styleUrls: ['./rg-user-management.component.scss']
 })
-export class RgUserManagementComponent implements OnInit {
+export class RgUserManagementComponent {
 
   userList: User[] = [];
 
   createUserForm = new FormGroup({
     email: new FormControl("", [Validators.required, Validators.email]),
-    username: new FormControl("",[Validators.required]),
-    password: new FormControl("", [Validators.required]),
-    passwordConfirm: new FormControl("", [Validators.required])
+    username: new FormControl("", [Validators.required]),
+    password: new FormControl("", [Validators.required, Validators.minLength(8)]),
+    passwordConfirm: new FormControl("", [Validators.required, Validators.minLength(8)]),
+    role: new FormControl("", [Validators.required, Validators.minLength(8)]),
   });
 
-  displayedColumns: string[] = ['position', 'name', 'weight', 'symbol'];
-  dataSource = new MatTableDataSource(this.userList);
+  resultsLength = 0;
+  isLoadingResults = true;
+  isRateLimitReached = false;
+  displayedColumns: string[] = ['Email', 'Nombre Usuario', 'Rol', 'Editar', 'Eliminar'];
+  dataSource: MatTableDataSource<User>;
+
+  roles: Role[] = [];
+  selectedOption: string | null = '';
 
   showPasswordIcon: string = 'visibility_off';
   showPasswordConfirmIcon: string = 'visibility_off';
 
-  constructor() { }
+  constructor(
+    private userDataService: UserDataService,
+    private route: ActivatedRoute,
+    public dialog: MatDialog,
+    private snackBar: MatSnackBar,
+  ) {
+    this.userList = this.route.snapshot.data['response'];
+    this.roles = this.route.snapshot.data['roles'];
+    console.log(this.roles);
+
+    this.dataSource = new MatTableDataSource(this.userList);
+  }
 
   ngOnInit(): void {
-  }
-
-  createUserSubmit(){
 
   }
 
-  isInvalidField(field: string){
+  createUserSubmit() {
+
+    if (this.createUserForm.valid) {
+      this.userDataService.createUser(
+        this.createUserForm.value['email']!,
+        this.createUserForm.value['password']!,
+        this.createUserForm.value['role']!,
+        this.createUserForm.value['username']!
+      ).subscribe({
+        next: (response) => {
+          this.snackBar.open(`Creacion de usuario exitoso: ${response.email}`, 'cerrar', { duration: 2000 });
+        },
+        error: (err) => { console.log(err);
+        
+          this.snackBar.open(err.error, 'cerrar', { duration: 2000 }); }
+      });
+    }
+
+  }
+
+  isInvalidField(field: string) {
     return this.createUserForm.get(field)?.invalid && (this.createUserForm.get(field)?.dirty || this.createUserForm.get(field)?.touched);
   }
 
-  hasError(field: string, validation: string){
+  hasError(field: string, validation: string) {
+    console.log(this.createUserForm.get(field)?.errors);
     return this.createUserForm.get(field)?.hasError(validation);
   }
 
-  toogleShowPasswordIcon(){
+  toogleShowPasswordIcon() {
     if (this.showPasswordIcon == 'visibility_off') {
       this.showPasswordIcon = 'visibility';
     } else {
@@ -50,7 +95,7 @@ export class RgUserManagementComponent implements OnInit {
     }
   }
 
-  toogleShowPasswordConfirmIcon(){
+  toogleShowPasswordConfirmIcon() {
     if (this.showPasswordConfirmIcon == 'visibility_off') {
       this.showPasswordConfirmIcon = 'visibility';
     } else {
@@ -62,5 +107,29 @@ export class RgUserManagementComponent implements OnInit {
     const filterValue = (event.target as HTMLInputElement).value;
     this.dataSource.filter = filterValue.trim().toLowerCase();
   }
+
+  startEdit(user: User) {
+    this.openUserUpdateDialog(user);
+  }
+
+  startDeletion(id: string) {
+    alert(`vas a eliminar el elemento con el id: ${id}`)
+  }
+
+  openUserUpdateDialog(user: User): void {
+    const dialogRef = this.dialog.open(RgDialogUpdateUserComponent, {},);
+    dialogRef.componentInstance.roles = this.roles;
+    dialogRef.componentInstance.updateUserForm.get('username')?.setValue(user.username);
+    dialogRef.componentInstance.updateUserForm.get('role')?.setValue(user.role.id);
+    dialogRef.componentInstance.userId = user.id;
+
+    dialogRef.afterClosed().subscribe(result => {
+      console.log(result);
+      if (result) {
+        console.log("La consulta fue realizada con exito");
+      } "La consulta no fue realizada con exito"
+    });
+  }
+
 
 }

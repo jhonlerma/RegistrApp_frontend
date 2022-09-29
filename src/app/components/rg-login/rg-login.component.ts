@@ -30,15 +30,17 @@ export class RgLoginComponent implements OnInit {
   }
 
   loginSubmit() {
-    this.authService.login(this.loginForm.value['email']!, this.loginForm.value['password']!)
-      .subscribe({
-        next: () => {
-          this.snackBar.open('inicio de sesión exitoso', 'cerrar', { duration: 2000 });
-          this.router.navigate(['/', 'dashboard'])
-        },
-        error: (err) => { this.snackBar.open(err, 'cerrar', { duration: 2000 }); }
-      });
-    console.log(`peticion http ${JSON.stringify(this.loginForm.value)}`);
+    if (this.loginForm.valid) {
+      this.authService.login(this.loginForm.value['email']!, this.loginForm.value['password']!)
+        .subscribe({
+          next: () => {
+            this.snackBar.open('inicio de sesión exitoso', 'cerrar', { duration: 2000 });
+            this.router.navigate(['/', 'dashboard'])
+          },
+          error: (err) => { this.snackBar.open(err, 'cerrar', { duration: 2000 }); }
+        });
+
+    }
   }
 
   isInvalidField(field: string): any {
