@@ -18,6 +18,7 @@ import { NoAuthGuard } from './guards/auth/no-auth.guard';
 import { RoleGuard } from './guards/role/role.guard';
 import { ResultListResolver } from './resolvers/result-list/result-list.resolver';
 import { RoleListResolver } from './resolvers/role-list/role-list.resolver';
+import { TableListResolver } from './resolvers/table-list/table-list.resolver';
 import { UserListResolver } from './resolvers/user-list/user-list.resolver';
 import { UserResolver } from './resolvers/user/user.resolver';
 
@@ -79,6 +80,10 @@ const routes: Routes = [
         },
         canActivate: [RoleGuard],
         path: 'table-management',
+        resolve: {
+          response: TableListResolver,
+         
+        },
         component: RgTableManagementComponent
       },
       {
