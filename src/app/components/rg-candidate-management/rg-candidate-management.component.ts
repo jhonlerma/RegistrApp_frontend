@@ -1,7 +1,12 @@
 import { Component, OnInit } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
+import { MatDialog } from '@angular/material/dialog';
+import { MatSnackBar } from '@angular/material/snack-bar';
 import { MatTableDataSource } from '@angular/material/table';
-import { User } from 'src/app/models/candidate';
+import { ActivatedRoute } from '@angular/router';
+import { Candidate } from 'src/app/models/candidate';
+import { political_party } from 'src/app/models/political_party';
+import { PoliticalPartyDataService } from 'src/app/services/political-party-data/political-party-data.service';
 
 @Component({
   selector: 'app-rg-candidate-management',
@@ -11,19 +16,32 @@ import { User } from 'src/app/models/candidate';
 export class RgCandidateManagementComponent implements OnInit {
 
   candidateList: Candidate[] = [];
+  politicalPartyList:political_party[] = [];
+  selectedOption: string | null = '';
 
   createCandidateForm = new FormGroup({
     document: new FormControl("", [Validators.required]),
-    last_name: new FormControl("",[Validators.required]),
+    lastName: new FormControl("",[Validators.required]),
     name: new FormControl("", [Validators.required]),
     resolution: new FormControl("", [Validators.required]),
-    // ??political_party: new FormControl("", [Validators.required])
+    politicalParty: new FormControl("", [Validators.required])
   });
 
   displayedColumns: string[] = ['position', 'name', 'weight', 'symbol'];
-  dataSource = new MatTableDataSource(this.candidateList);
+  dataSourcePoliticalParty:MatTableDataSource<political_party>;
+  dataSource:MatTableDataSource<Candidate>;
 
-  constructor() { }
+  constructor(
+    private route:ActivatedRoute,
+    public dialog: MatDialog,
+    private snackBar: MatSnackBar,
+    private PoliticalPartyDataSource: PoliticalPartyDataService,
+  ){ 
+    this.politicalPartyList=this.route.snapshot.data['response'];
+    this.candidateList = this.route.snapshot.data['candidates']
+    this.dataSourcePoliticalParty = new MatTableDataSource(this.politicalPartyList);
+    this.dataSource = new MatTableDataSource(this.candidateList);
+  }
 
   ngOnInit(): void {
   }

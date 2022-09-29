@@ -22,6 +22,7 @@ import { RoleListResolver } from './resolvers/role-list/role-list.resolver';
 import { UserListResolver } from './resolvers/user-list/user-list.resolver';
 import { UserResolver } from './resolvers/user/user.resolver';
 import { PoliticalPartyGetAllService } from './services/political-party-get-all.service';
+import { CandidateListResolver } from './resolvers/candidate-list/candidate-list.resolver';
 
 const routes: Routes = [
   {
@@ -92,6 +93,7 @@ const routes: Routes = [
         path: 'political-party-management',
         resolve: {
           response: PoliticalPartyListResolver,
+          candidates: CandidateListResolver,
         },
         component: RgPoliticalPartyManagementComponent
       },
@@ -101,6 +103,9 @@ const routes: Routes = [
         },
         canActivate: [RoleGuard],
         path: 'candidate-management',
+        resolve: {
+          response:PoliticalPartyListResolver,
+        },
         component: RgCandidateManagementComponent
       },
       {
