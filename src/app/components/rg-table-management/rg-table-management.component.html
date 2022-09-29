@@ -6,48 +6,64 @@
     <mat-divider></mat-divider>
 
     <mat-card-content class="table-form">
-        <form action="">
-            <! ––<form [formGroup]="tableForm" (ngSubmit)="tableSubmit()">
-                <br>
-                <mat-label class="table-label">Registro de mesas</mat-label>
-                <p>
-                    <mat-form-field appearance="outline">
-                        <mat-label>Numero de mesa</mat-label>
-                        <input formControlName="nTable" name="nTable" matInput placeholder="100" table-input>
-                        <mat-icon matSuffix>dialpad</mat-icon>
-                        <mat-hint>Identificador de la mesa</mat-hint>
-                    </mat-form-field>
-                </p>
-                <p>
-                    <mat-form-field appearance="outline">
-                        <mat-label>Personas Registradas</mat-label>
-                        <input formControlName="nPersonTable" name="nPersonTable" matInput placeholder="Placeholder"
-                            table-input>
-                        <mat-icon matSuffix>people</mat-icon>
-                        <mat-hint>Personas registadas en la mesa</mat-hint>
-                    </mat-form-field>
-                </p>
-                <button class="table-button-create" type="submit" mat-raised-button color="accent">Registrar</button>
 
-                <br>
-                <br>
+        <form [formGroup]="createTableForm" (ngSubmit)="createTableSubmit()">
+            <br>
+            <mat-label class="table-label">Registro de mesas</mat-label>
+            <p>
+                <mat-form-field appearance="outline">
+                    <mat-label>Numero de mesa</mat-label>
+                    <input formControlName="numero" name="numero" matInput placeholder="100" table-input>
+                    <mat-icon matSuffix>dialpad</mat-icon>
+                    <mat-hint>Identificador de la mesa</mat-hint>
+                </mat-form-field>
+
+                <mat-error *ngIf="isInvalidField('numero')">
+                    <span *ngIf="hasError('numero', 'required')">El campo es requerido</span>
+                </mat-error>
+            </p>
+            <p>
+                <mat-form-field appearance="outline">
+                    <mat-label>Personas Registradas</mat-label>
+                    <input formControlName="cantidad_inscritos" name="cantidad_inscritos" matInput placeholder="Placeholder"
+                        table-input>
+                    <mat-icon matSuffix>people</mat-icon>
+                    <mat-hint>Personas registadas en la mesa</mat-hint>
+                </mat-form-field>
+
+                <mat-error *ngIf="isInvalidField('cantidad_inscritos')">
+                    <span *ngIf="hasError('cantidad_inscritos', 'required')">El campo es requerido</span>
+                </mat-error>
+
+            </p>
+            <button class="table-button-create" type="submit" mat-raised-button color="accent">Registrar</button>
+
+            <br>
+            <br>
 
         </form>
         <mat-divider></mat-divider>
-        <form action="">
+    </mat-card-content>
+    <mat-card-content>
+        <form [formGroup]="searchTableForm" (ngSubmit)="searchTableSubmit()">
             <br>
             <mat-label class="table-label">Buscar mesa</mat-label>
             <br>
             <mat-form-field appearance="outline">
                 <mat-label>Id alfanumerico</mat-label>
-                <input matInput placeholder="100" table-input>
+                <input formControlName="idTableS" name="idTableS" matInput placeholder="100" table-input>
                 <mat-icon matSuffix>search</mat-icon>
                 <mat-hint>Identificador de la mesa</mat-hint>
             </mat-form-field>
+            
+            <mat-error *ngIf="isInvalidField('idTableS')">
+                <span *ngIf="hasError('idTableS', 'required')">El campo es requerido</span>
+            </mat-error>
 
             <button class="table-button" type="submit" mat-raised-button color="accent">Buscar mesa</button>
             <mat-divider></mat-divider>
-
+        </form>
+        <form [formGroup]="createTableForm" (ngSubmit)="createTableSubmit()">
             <br>
             <mat-form-field appearance="outline">
                 <mat-label>Numero de mesa</mat-label>
@@ -71,7 +87,8 @@
 
 
         </form>
-
+    </mat-card-content>
+    <mat-card-content>
         <mat-divider></mat-divider>
         <br>
         <mat-label class="table-label">Total de mesas Registradas</mat-label>
@@ -93,13 +110,9 @@
                 <th mat-header-cell *matHeaderCellDef> Cantidad de inscritos </th>
                 <td mat-cell *matCellDef="let element"> {{element.cantidad_inscritos}} </td>
             </ng-container>
-
             <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
             <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
         </table>
-
-
-
     </mat-card-content>
 
 </mat-card>
