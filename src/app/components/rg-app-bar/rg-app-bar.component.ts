@@ -14,7 +14,11 @@ export class RgAppBarComponent implements OnInit {
   isLoggedIn: boolean = false;
   isVisibleSidebar = false;
   username?: string | null;
-  constructor(private dataService: DataService, private authService: AuthService, private router: Router) {
+  constructor(
+    private dataService: DataService,
+    private sidebarService: SidebarService,
+    private authService: AuthService,
+    private router: Router) {
 
   }
 
@@ -40,6 +44,8 @@ export class RgAppBarComponent implements OnInit {
   }
   
   sidebarToggle() {
+    
+    this.sidebarService.sidebarToggle();
   }
 
 }

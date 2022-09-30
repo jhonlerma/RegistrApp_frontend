@@ -1,14 +1,14 @@
-import { AfterViewInit, Component, OnInit, ViewChild } from '@angular/core';
+import { ChangeDetectorRef, Component } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { MatDialog } from '@angular/material/dialog';
-import { MatPaginator } from '@angular/material/paginator';
-import { MatSort } from '@angular/material/sort';
+import { MatSnackBar } from '@angular/material/snack-bar';
 import { MatTableDataSource } from '@angular/material/table';
 import { ActivatedRoute } from '@angular/router';
 import { Role } from 'src/app/models/auth/role-response';
 import { User } from 'src/app/models/user';
 import { UserDataService } from 'src/app/services/user-data/user-data.service';
 import { PasswordConfirmValidator } from 'src/app/validators/password-confirm.validator';
+import { RgConfirmDialogComponent } from '../rg-confirm-dialog/rg-confirm-dialog.component';
 import { RgDialogUpdateUserComponent } from '../rg-dialog-update-user/rg-dialog-update-user.component';
 
 @Component({
@@ -34,17 +34,22 @@ export class RgUserManagementComponent {
   displayedColumns: string[] = ['Email', 'Nombre Usuario', 'Rol', 'Editar', 'Eliminar'];
   dataSource: MatTableDataSource<User>;
 
-  roles: Role[]=[];
-  selectedOption: string | null ='';
+  roles: Role[] = [];
+  selectedOption: string | null = '';
 
   showPasswordIcon: string = 'visibility_off';
   showPasswordConfirmIcon: string = 'visibility_off';
 
-  constructor(private userDataService: UserDataService, private route: ActivatedRoute, public dialog: MatDialog) {
+  constructor(
+    private userDataService: UserDataService,
+    private route: ActivatedRoute,
+    public dialog: MatDialog,
+    private snackBar: MatSnackBar,
+    private changeDetectorRefs: ChangeDetectorRef
+  ) {
     this.userList = this.route.snapshot.data['response'];
     this.roles = this.route.snapshot.data['roles'];
-    console.log(this.roles);
-    
+
     this.dataSource = new MatTableDataSource(this.userList);
   }
 
@@ -54,6 +59,22 @@ export class RgUserManagementComponent {
 
   createUserSubmit() {
 
+    if (this.createUserForm.valid) {
+      this.userDataService.createUser(
+        this.createUserForm.value['email']!,
+        this.createUserForm.value['password']!,
+        this.createUserForm.value['role']!,
+        this.createUserForm.value['username']!
+      ).subscribe({
+        next: (response) => {
+          this.snackBar.open(`Creacion de usuario exitoso: ${response.email}`, 'cerrar', { duration: 2000 });
+          this.updateUsersTableRequest();
+        },
+        error: (err) => {        
+          this.snackBar.open(err.error, 'cerrar', { duration: 2000 }); }
+      });
+    }
+
   }
 
   isInvalidField(field: string) {
@@ -61,7 +82,6 @@ export class RgUserManagementComponent {
   }
 
   hasError(field: string, validation: string) {
-    console.log(this.createUserForm.get(field)?.errors);
     return this.createUserForm.get(field)?.hasError(validation);
   }
 
@@ -91,10 +111,10 @@ export class RgUserManagementComponent {
   }
 
   startDeletion(id: string) {
-    alert(`vas a eliminar el elemento con el id: ${id}`)
+    this.openUserDeleteDialog(`vas a eliminar el elemento con el id: ${id}\n¿Estas seguro?`, id);
   }
 
-  openUserUpdateDialog(user: User):void{
+  openUserUpdateDialog(user: User): void {
     const dialogRef = this.dialog.open(RgDialogUpdateUserComponent, {},);
     dialogRef.componentInstance.roles = this.roles;
     dialogRef.componentInstance.updateUserForm.get('username')?.setValue(user.username);
@@ -102,12 +122,48 @@ export class RgUserManagementComponent {
     dialogRef.componentInstance.userId = user.id;
 
     dialogRef.afterClosed().subscribe(result => {
-      console.log(result);
-      if (result){
-        console.log("La consulta fue realizada con exito");
-      }"La consulta no fue realizada con exito"
+      if (result) {
+        this.updateUsersTableRequest();
+      }
     });
   }
 
+  openUserDeleteDialog(message: string, id: string): void {
+    const dialogRef = this.dialog.open(RgConfirmDialogComponent, {},);
+    dialogRef.componentInstance.message = message;
+
+    dialogRef.afterClosed().subscribe(result => {
+      if (result) {
+        this.deleteUserRequest(id);
+      }
+    });
+  }
+
+  deleteUserRequest(id: string){
+    this.userDataService.deleteUser(id).subscribe({
+      next: (x) =>{
+        this.updateUsersTableRequest();
+        this.snackBar.open('Usuario eliminado exitosamente', 'cerrar', { duration: 2000 });
+      },
+      error: (err)=>{
+        this.snackBar.open(err.error, 'cerrar', { duration: 2000 });
+      }
+    })
+
+  }
+
+  updateUsersTableRequest(){
+    this.userDataService.getAllUsers().subscribe({
+      next: (x) =>{
+        this.userList = x;
+        this.dataSource = new MatTableDataSource(this.userList);
+        this.changeDetectorRefs.detectChanges();    
+      },
+      error: (err)=>{
+        this.snackBar.open(err.error, 'cerrar', { duration: 2000 });
+      }
+    })
+
+  }
 
 }
