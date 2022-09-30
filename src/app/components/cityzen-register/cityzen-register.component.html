@@ -1,1 +1,61 @@
-<p>cityzen-register works!</p>
+<mat-card class="create-user-card">
+    <mat-card-title>Crear Usuario</mat-card-title>
+    <mat-card-content>
+      <form [formGroup]="createUserForm" (ngSubmit)="createUserSubmit()">
+  
+        <mat-form-field class="create-user-form-field" appearance="standard">
+          <mat-label>Correo Electrónico</mat-label>
+          <input formControlName="email" name="email" matInput placeholder="ejemplo@mail.com">
+          <mat-icon fontSet="material-icons-outlined" matSuffix>mail</mat-icon>
+          <mat-hint>Ingrese el correo de registro</mat-hint>
+  
+          <mat-error *ngIf="isInvalidField('email')">
+            <span *ngIf="hasError('email', 'email')">Ingrese un email válido</span>
+            <span *ngIf="hasError('email', 'required')">El campo es requerido</span>
+          </mat-error>
+  
+        </mat-form-field>
+  
+        <mat-form-field class="create-user-form-field" appearance="standard">
+          <mat-label>Nombre Usuario</mat-label>
+          <input formControlName="username" name="username" matInput placeholder="saitama123">
+          <mat-icon fontSet="material-icons-outlined" matSuffix>person</mat-icon>
+          <mat-hint>Ingrese el alias de usuario</mat-hint>
+  
+          <mat-error *ngIf="isInvalidField('username')">
+            <span *ngIf="hasError('username', 'required')">El campo es requerido</span>
+          </mat-error>
+        </mat-form-field>
+    
+        <mat-form-field class="create-user-form-field" appearance="standard">
+          <mat-label>Contraseña</mat-label>
+          <input formControlName="password" name="password" matInput placeholder="Contraseña"
+            [type]="showPasswordIcon === 'visibility'?'text':'password'">
+          <mat-icon fontSet="material-icons-outlined" matSuffix (click)="toogleShowPasswordIcon()">{{showPasswordIcon}}
+          </mat-icon>
+          <mat-hint>Cree una contraseña para iniciar sesión</mat-hint>
+  
+          <mat-error *ngIf="isInvalidField('password')">
+            <span *ngIf="hasError('password', 'required')">El campo es requerido</span>
+            <span *ngIf="hasError('password', 'minlength')">El campo debe tener 8 o mas caracteres</span>
+          </mat-error>
+        </mat-form-field>
+  
+        <mat-form-field class="create-user-form-field" appearance="standard">
+          <mat-label>Confirmar Contraseña</mat-label>
+          <input formControlName="passwordConfirm" name="passwordConfirm" matInput placeholder="Contraseña"
+            [type]="showPasswordConfirmIcon === 'visibility'?'text': 'password'">
+          <mat-icon fontSet="material-icons-outlined" matSuffix (click)="toogleShowPasswordConfirmIcon()">
+            {{showPasswordConfirmIcon}}</mat-icon>
+          <mat-hint>Repita la contraseña</mat-hint>
+  
+          <mat-error *ngIf="isInvalidField('passwordConfirm')">
+            <span *ngIf="hasError('passwordConfirm', 'required')">El campo es requerido</span>
+            <span *ngIf="hasError('passwordConfirm', 'minlength')">El campo debe tener 8 o mas caracteres</span>
+          </mat-error>
+        </mat-form-field>
+  
+        <button class="create-user-button" type="submit" mat-raised-button color="accent">Crear Usuario</button>
+  
+      </form>
+    </mat-card-content>
