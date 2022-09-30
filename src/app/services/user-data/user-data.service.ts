@@ -77,10 +77,29 @@ export class UserDataService {
     username: string
   ): Observable<User> {
     this.dataService.loadingScreen.next(true);
-    return this.http.put<User>(`${environment.url}${this.ENDPOINT}/${{id}}`,{
+    return this.http.put<User>(`${environment.url}${this.ENDPOINT}${id}`,{
       role,
       username
     },
+      {
+        observe: 'response',
+        headers: {
+          'authorization': `Bearer ${localStorage.getItem(LOCAL_STORAGE_TOKEN)}`
+        }
+      }).pipe(map(response => {
+        this.dataService.loadingScreen.next(false);
+
+        return response.body!;
+      }), catchError((err) => {
+        this.dataService.loadingScreen.next(false);
+
+        return throwError(() => err);
+      }));
+  }
+
+  deleteUser(id: string): Observable<User> {
+    this.dataService.loadingScreen.next(true);
+    return this.http.delete<User>(`${environment.url}${this.ENDPOINT}${id}`,
       {
         observe: 'response',
         headers: {
