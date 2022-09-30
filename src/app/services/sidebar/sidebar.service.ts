@@ -7,8 +7,11 @@ import { BehaviorSubject, Observable, Subject } from 'rxjs';
 })
 export class SidebarService {
 
-  subject: Subject<any> = new Subject<any>();
+  isOpened: BehaviorSubject<any> = new BehaviorSubject(null);
 
   constructor() { }
 
+  sidebarToggle(){
+    this.isOpened.next(null);
+  }
 }
