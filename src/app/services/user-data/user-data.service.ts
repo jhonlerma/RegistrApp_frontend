@@ -83,9 +83,6 @@ export class UserDataService {
     },
       {
         observe: 'response',
-        headers: {
-          'authorization': `Bearer ${localStorage.getItem(LOCAL_STORAGE_TOKEN)}`
-        }
       }).pipe(map(response => {
         this.dataService.loadingScreen.next(false);
 

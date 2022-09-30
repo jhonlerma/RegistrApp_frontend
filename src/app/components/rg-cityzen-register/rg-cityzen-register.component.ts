@@ -1,11 +1,12 @@
-import { ChangeDetectorRef, Component } from '@angular/core';
+import { ChangeDetectorRef, Component, OnDestroy, OnInit } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { MatDialog } from '@angular/material/dialog';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { MatTableDataSource } from '@angular/material/table';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { Role } from 'src/app/models/auth/role-response';
 import { User } from 'src/app/models/user';
+import { DataService } from 'src/app/services/data/data.service';
 import { UserDataService } from 'src/app/services/user-data/user-data.service';
 import { PasswordConfirmValidator } from 'src/app/validators/password-confirm.validator';
 import { RgConfirmDialogComponent } from '../rg-confirm-dialog/rg-confirm-dialog.component';
@@ -13,10 +14,10 @@ import { RgDialogUpdateUserComponent } from '../rg-dialog-update-user/rg-dialog-
 
 @Component({
   selector: 'app-cityzen-register',
-  templateUrl: './cityzen-register.component.html',
-  styleUrls: ['./cityzen-register.component.scss']
+  templateUrl: './rg-cityzen-register.component.html',
+  styleUrls: ['./rg-cityzen-register.component.scss']
 })
-export class CityzenRegisterComponent {
+export class RgCityzenRegisterComponent implements OnInit, OnDestroy{
 
   roles: Role[] = [];
   showPasswordIcon: string = 'visibility_off';
@@ -27,20 +28,26 @@ export class CityzenRegisterComponent {
     username: new FormControl("", [Validators.required]),
     password: new FormControl("", [Validators.required, Validators.minLength(8)]),
     passwordConfirm: new FormControl("", [Validators.required, Validators.minLength(8)]),
-    role: new FormControl("", [Validators.required, Validators.minLength(8)]),
   });
 
 
   constructor(
     private userDataService: UserDataService,
+    private dataService: DataService,
     public dialog: MatDialog,
     private snackBar: MatSnackBar,
+    private router: Router
   ) {
   }
 
   ngOnInit(): void {
+    this.dataService.isOnRegister.next(true);
   }
 
+  ngOnDestroy(){
+    this.dataService.isOnRegister.next(false);
+
+  }
   createUserSubmit() {
 
     if (this.createUserForm.valid) {
@@ -51,6 +58,7 @@ export class CityzenRegisterComponent {
       ).subscribe({
         next: (response) => {
           this.snackBar.open(`Creacion de usuario exitoso: ${response.email}`, 'cerrar', { duration: 2000 });
+          this.router.navigate(['/']);
         },
         error: (err) => {        
           this.snackBar.open(err.error, 'cerrar', { duration: 2000 }); }

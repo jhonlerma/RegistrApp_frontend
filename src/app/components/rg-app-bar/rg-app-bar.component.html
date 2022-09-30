@@ -15,9 +15,13 @@
         <span>Cerrar Sesión</span>
       </button>
     </mat-menu>
-    <button *ngIf="!isLoggedIn" mat-button (click)="registroCiudadano()">
+    <button *ngIf="!isLoggedIn && !isOnRegister" mat-button [routerLink]="['/', 'register']">
       <span>Registrate</span>
       <mat-icon class="user-icon" fontSet="material-icons-outlined" matSuffix>person_add</mat-icon>
+    </button>
+    <button *ngIf="isOnRegister" mat-button [routerLink]="['/']">
+      <span>Iniciar Sesión</span>
+      <mat-icon class="user-icon" fontSet="material-icons-outlined" matSuffix>login</mat-icon>
     </button>
 
 </mat-toolbar>

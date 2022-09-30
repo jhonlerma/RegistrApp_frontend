@@ -48,7 +48,7 @@ import { RgPoliticalPartyGetIdComponent } from './components/rg-political-party-
 import { RgDialogInputComponent } from './components/rg-dialog-input/rg-dialog-input.component';
 import { RgDialogUpdateUserComponent } from './components/rg-dialog-update-user/rg-dialog-update-user.component';
 import { RgConfirmDialogComponent } from './components/rg-confirm-dialog/rg-confirm-dialog.component';
-import { CityzenRegisterComponent } from './components/cityzen-register/cityzen-register.component';
+import { RgCityzenRegisterComponent } from './components/rg-cityzen-register/rg-cityzen-register.component';
 
 @NgModule({
   declarations: [
@@ -74,7 +74,7 @@ import { CityzenRegisterComponent } from './components/cityzen-register/cityzen-
     RgDialogInputComponent,
     RgDialogUpdateUserComponent,
     RgConfirmDialogComponent,
-    CityzenRegisterComponent,
+    RgCityzenRegisterComponent,
   ],
   imports: [
     BrowserModule,

@@ -12,6 +12,7 @@ import { SidebarService } from 'src/app/services/sidebar/sidebar.service';
 export class RgAppBarComponent implements OnInit {
 
   isLoggedIn: boolean = false;
+  isOnRegister: boolean = false;
   isVisibleSidebar = false;
   username?: string | null;
   constructor(
@@ -30,6 +31,10 @@ export class RgAppBarComponent implements OnInit {
 
     this.dataService.username.subscribe(x => {
       this.username = x;
+    })
+
+    this.dataService.isOnRegister.subscribe(x => {
+      this.isOnRegister = x;
     })
 
   }

@@ -1,6 +1,7 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
 import { RgCandidateManagementComponent } from './components/rg-candidate-management/rg-candidate-management.component';
+import { RgCityzenRegisterComponent } from './components/rg-cityzen-register/rg-cityzen-register.component';
 import { RgDashboardComponent } from './components/rg-dashboard/rg-dashboard.component';
 import { RgLoginComponent } from './components/rg-login/rg-login.component';
 import { RgNotFoundComponent } from './components/rg-not-found/rg-not-found.component';
@@ -29,6 +30,10 @@ const routes: Routes = [
       {
         path: '',
         component: RgLoginComponent
+      },
+      {
+        path: 'register',
+        component: RgCityzenRegisterComponent
       },
     ],
   },
