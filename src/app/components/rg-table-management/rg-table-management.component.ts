@@ -72,18 +72,19 @@ export class RgTableManagementComponent  {
     const filterValue = (event.target as HTMLInputElement).value;
     this.dataSource.filter = filterValue.trim().toLowerCase();
   }
-  startEdit(table: Table) {
-    this.openTableUpdateDialog(table);
+  startEdit(id: string,numero:string,cantidad_inscritos:string) {
+    this.openTableUpdateDialog(id,numero,cantidad_inscritos);
+    console.log(id);
   }
 
   startDeletion(id: string) {
     this.openTableDeleteDialog(`vas a eliminar el elemento con el id: ${id}\n¿Estas seguro?`, id);
   }
-  openTableUpdateDialog(table: Table): void {
+  openTableUpdateDialog(id: string,numero:string,cantidad_inscritos:string): void {
     const dialogRef = this.dialog.open(RgDialogUpdateTableComponent, {},);
-    dialogRef.componentInstance.updateTableForm.get('numero')?.setValue(table.numero);
-    dialogRef.componentInstance.updateTableForm.get('cantidad_inscritos')?.setValue(table.cantidad_inscritos);
-    dialogRef.componentInstance.tableId = table._id;
+    dialogRef.componentInstance.updateTableForm.get('numero')?.setValue(numero);
+    dialogRef.componentInstance.updateTableForm.get('cantidad_inscritos')?.setValue(cantidad_inscritos);
+    dialogRef.componentInstance.tableId =id;
 
     dialogRef.afterClosed().subscribe(result => {
       if (result) {

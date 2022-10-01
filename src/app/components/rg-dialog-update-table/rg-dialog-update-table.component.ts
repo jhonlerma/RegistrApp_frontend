@@ -12,7 +12,7 @@ import { DialogData } from '../rg-dialog-input/rg-dialog-input.component';
 })
 export class RgDialogUpdateTableComponent implements OnInit {
   updateTableForm = new FormGroup({
-    numero: new FormControl("", [Validators.required]),
+    numero: new FormControl("", []),
     cantidad_inscritos: new FormControl("",[]),
   });
   tableId:string='';
@@ -22,12 +22,13 @@ export class RgDialogUpdateTableComponent implements OnInit {
 
   ngOnInit(): void {
   }
-  updateUserSubmit() {
+  updateTableSubmit() {
     if (this.updateTableForm.valid) {
       this.service.updateTable(
-        this.tableId,
+        this.tableId,        
         this.updateTableForm.value['numero']!,
-        this.updateTableForm.value['cantidad_inscritos']!
+        this.updateTableForm.value['cantidad_inscritos']!,
+        
       ).subscribe({
         next: () => {
           this.snackBar.open(`Creacion de usuario exitoso`, 'cerrar', { duration: 2000 });
@@ -40,4 +41,12 @@ export class RgDialogUpdateTableComponent implements OnInit {
     }
 
   }
+  isInvalidField(field: string) {
+    return this.updateTableForm.get(field)?.invalid && (this.updateTableForm.get(field)?.dirty || this.updateTableForm.get(field)?.touched);
+  }
+
+  hasError(field: string, validation: string) {
+    return this.updateTableForm.get(field)?.hasError(validation);
+  }
+
 }

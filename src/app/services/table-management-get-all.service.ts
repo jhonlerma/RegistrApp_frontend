@@ -12,6 +12,7 @@ import { environment } from 'src/environments/environment';
 })
 export class TableManagementGetAllService {
   ENDPOINT = 'table/'
+  ruta='http://localhost:3000/'
   private API_DATOS = "http://localhost:4000/table/list";
 
   constructor(private http: HttpClient,
@@ -58,7 +59,7 @@ export class TableManagementGetAllService {
     cantidad_inscritos:string
   ):Observable<Table>{
     this.dataService.loadingScreen.next(true);
-    return this.http.put<Table>(`${environment.url}${this.ENDPOINT}${id}`,{
+    return this.http.put<Table>(`${this.ruta}${this.ENDPOINT}${id}`,{
       numero,
       cantidad_inscritos
     },{
@@ -79,7 +80,7 @@ export class TableManagementGetAllService {
 
   deletTable(id: string): Observable<Table> {
     this.dataService.loadingScreen.next(true);
-    return this.http.delete<Table>(`${environment.url}${this.ENDPOINT}${id}`,
+    return this.http.delete<Table>(`${this.ruta}${this.ENDPOINT}${id}`,
       {
         observe: 'response',
         headers: {
