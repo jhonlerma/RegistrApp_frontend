@@ -1,26 +1,43 @@
 :host{
+  display: flex;
+  justify-content: center;
+  align-content: center;
   width: 100%;
   height: 100%;
 }
-
-.grid-container {
-  margin: 20px;
+.profile-card {
+  display: flex;
+  flex-direction: column;
+  align-self: center;
+  justify-self: center;
+  max-width: 250px;
+  align-self: center;
 }
 
-.dashboard-card {
-  position: absolute;
-  top: 15px;
-  left: 15px;
-  right: 15px;
-  bottom: 15px;
+.profile-card-image{
+  background-image: url('https://cartoonandstuff.files.wordpress.com/2011/05/bin_laden_cartoon_photo.jpg');
+  background-size: cover;
+  background-repeat: no-repeat;
 }
 
-.more-button {
-  position: absolute;
-  top: 5px;
-  right: 10px;
+.background-card-image{
+  display: flex;
+  justify-self: center;
+  align-self: center;
+  width: 200px;
 }
 
-.dashboard-card-content {
-  text-align: center;
+.dashboard-card-content{
+  padding: 24px;
+}
+
+.label{
+  margin-top: 12px;
+  font-size: 16px;
+}
+
+.text{
+  margin-top: 8px;
+  font-size: 14px;
+  text-align: justify;
 }
