@@ -97,4 +97,24 @@ export class CandidateDataService {
       }));
   }
 
+
+  deleteCandidate(id: string): Observable<Candidate> {
+    this.dataService.loadingScreen.next(true);
+    return this.http.delete<Candidate>(`${environment.url}${this.ENDPOINT}${id}`,
+      {
+        observe: 'response',
+        headers: {
+          'authorization': `Bearer ${localStorage.getItem(LOCAL_STORAGE_TOKEN)}`
+        }
+      }).pipe(map(response => {
+        this.dataService.loadingScreen.next(false);
+
+        return response.body!;
+      }), catchError((err) => {
+        this.dataService.loadingScreen.next(false);
+
+        return throwError(() => err);
+      }));
+  }
+
 }

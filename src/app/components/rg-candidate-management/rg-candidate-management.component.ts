@@ -51,9 +51,6 @@ export class RgCandidateManagementComponent implements OnInit {
   ngOnInit(): void {
   }
   
-  
-  
-  
 
   createCandidateSubmit(){
     if (this.createCandidateForm.valid) {
@@ -66,7 +63,7 @@ export class RgCandidateManagementComponent implements OnInit {
       ).subscribe({
         next: (response) => {
           this.snackBar.open(`Creacion de candidato exitosa: ${response.document}`, 'cerrar', { duration: 2000 });
-          this.updateUsersTableRequest();
+          this.updateCandidatesTableRequest();
         },
         error: (err) => {        
           this.snackBar.open(err.error, 'cerrar', { duration: 2000 }); }
@@ -89,14 +86,38 @@ export class RgCandidateManagementComponent implements OnInit {
   }
 
   startEdit(candidate: Candidate) {
-    this.openUserUpdateDialog(candidate);
+    this.openCandidateUpdateDialog(candidate);
   }
 
   startDeletion(id: string) {
-  //   this.openUserDeleteDialog(`vas a eliminar el elemento con el id: ${id}\n¿Estas seguro?`, id);
+    this.openCandidateDeleteDialog(`vas a eliminar el elemento con el id: ${id}\n¿Estas seguro?`, id);
   }
 
-  openUserUpdateDialog(candidate: Candidate): void {
+  openCandidateDeleteDialog(message: string, id: string): void {
+    const dialogRef = this.dialog.open(RgConfirmDialogComponent, {},);
+    dialogRef.componentInstance.message = message;
+
+    dialogRef.afterClosed().subscribe(result => {
+      if (result) {
+        this.deleteCandidateRequest(id);
+      }
+    });
+  }
+
+  deleteCandidateRequest(id: string){
+    this.candidateDataService.deleteCandidate(id).subscribe({
+      next: (x) =>{
+        this.updateCandidatesTableRequest();
+        this.snackBar.open('Candidate eliminado exitosamente', 'cerrar', { duration: 2000 });
+      },
+      error: (err)=>{
+        this.snackBar.open(err.error, 'cerrar', { duration: 2000 });
+      }
+    })
+
+  }
+
+  openCandidateUpdateDialog(candidate: Candidate): void {
     const dialogRef = this.dialog.open(RgDialogUpdateCandidateComponent, {},);
     dialogRef.componentInstance.updateCandidateForm.get('document')?.setValue(candidate.document);
     dialogRef.componentInstance.updateCandidateForm.get('name')?.setValue(candidate.name);
@@ -107,7 +128,7 @@ export class RgCandidateManagementComponent implements OnInit {
 
     dialogRef.afterClosed().subscribe(result => {
       if (result) {
-        this.updateUsersTableRequest();
+        this.updateCandidatesTableRequest();
       }
     });
   }
@@ -136,7 +157,7 @@ export class RgCandidateManagementComponent implements OnInit {
 
   // }
 
-  updateUsersTableRequest(){
+  updateCandidatesTableRequest(){
     this.candidateDataService.getAll().subscribe({
       next: (x) =>{
         this.candidateList = x;

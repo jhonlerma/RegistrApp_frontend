@@ -2,6 +2,7 @@ import { Component, Inject, OnInit } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
 import { MatSnackBar } from '@angular/material/snack-bar';
+import { political_party } from 'src/app/models/political_party';
 import { CandidateDataService } from 'src/app/services/candidate-data/candidate-data.service';
 import { DialogData } from '../rg-dialog-input/rg-dialog-input.component';
 
@@ -13,6 +14,7 @@ import { DialogData } from '../rg-dialog-input/rg-dialog-input.component';
 export class RgDialogUpdateCandidateComponent implements OnInit {
 
   candidateId: string ='';
+  politicalPartyList:political_party[] = [];
 
   updateCandidateForm = new FormGroup({
     document: new FormControl("", [Validators.required]),
@@ -31,7 +33,7 @@ export class RgDialogUpdateCandidateComponent implements OnInit {
   ngOnInit(): void {
   }
 
-  updateUserSubmit() {
+  updateCandidateSubmit() {
     if (this.updateCandidateForm.valid) {
       this.candidateDataService.updateCandidate(
         this.candidateId,
@@ -42,7 +44,7 @@ export class RgDialogUpdateCandidateComponent implements OnInit {
         this.updateCandidateForm.value['resolution']!,
       ).subscribe({
         next: () => {
-          this.snackBar.open(`Creacion de candidato exitoso`, 'cerrar', { duration: 2000 });
+          this.snackBar.open(`Actualización de candidato exitoso`, 'cerrar', { duration: 2000 });
           this.dialogRef.close(true);
         },
         error: (err) => {
