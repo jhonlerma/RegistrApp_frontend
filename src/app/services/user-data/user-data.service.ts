@@ -70,6 +70,30 @@ export class UserDataService {
       }));
   }
 
+  createCityzenUser(
+    email: string,
+    password: string,
+    username: string
+  ): Observable<User> {
+    this.dataService.loadingScreen.next(true);
+    return this.http.post<User>(`${environment.url}${this.ENDPOINT}cityzen`,{
+      email,
+      password,
+      username
+    },
+      {
+        observe: 'response',
+      }).pipe(map(response => {
+        this.dataService.loadingScreen.next(false);
+
+        return response.body!;
+      }), catchError((err) => {
+        this.dataService.loadingScreen.next(false);
+
+        return throwError(() => err);
+      }));
+  }
+
 
   updateUser(
     id: string,
