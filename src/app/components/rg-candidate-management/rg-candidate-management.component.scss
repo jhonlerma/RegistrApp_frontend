@@ -6,7 +6,7 @@
     height: 100%;
   }
   
-  .create-user-card {
+  .create-candidate-card {
     display: flex;
     flex-direction: column;
     align-self: start;
@@ -14,28 +14,28 @@
     max-width: 400px;
   }
   
-  .create-user-header {
+  .create-candidate-header {
     justify-content: center;
   }
   
-  .create-user-title {
+  .create-candidate-title {
     font-weight: bold;
   }
   
-  .create-user-logo {
+  .create-candidate-logo {
     margin: auto;
     width: 256px;
   }
   
-  .create-user-form {
+  .create-candidate-form {
     padding: 24px;
   }
   
-  .create-user-form-field {
+  .create-candidate-form-field {
     display: flex;
   }
   
-  .create-user-button {
+  .create-candidate-button {
     display: flex;
     justify-content: center;
     margin-top: 24px;
