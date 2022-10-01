@@ -27,7 +27,6 @@ export class CandidateDataService {
 
     }).pipe(map(body => {
       this.dataService.loadingScreen.next(false);
-      console.log(body);
       return body[0];
     }), catchError((err) => {
       this.dataService.loadingScreen.next(false);
@@ -39,15 +38,14 @@ export class CandidateDataService {
     document: string,
     name: string,
     last_name: string,
-    political_party: string,
     resolution: string,
+    political_party: string,
   ): Observable<Candidate> {
     this.dataService.loadingScreen.next(true);
-    return this.http.post<Candidate>(`${environment.url}${this.ENDPOINT}`, {
+    return this.http.post<Candidate>(`${environment.url}${this.ENDPOINT}${political_party}`, {
       document,
       name,
       last_name,
-      political_party,
       resolution,
 
     },

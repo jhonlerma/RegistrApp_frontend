@@ -24,8 +24,12 @@ export class RgDialogUpdateUserComponent implements OnInit {
   roles: Role[] = [];
   userId: string ='';
 
-  constructor(private userDataService: UserDataService, public dialogRef: MatDialogRef<RgDialogUpdateUserComponent>,
-    @Inject(MAT_DIALOG_DATA) public ID: DialogData, private snackBar: MatSnackBar) {
+  constructor(
+    private userDataService: UserDataService,
+    public dialogRef: MatDialogRef<RgDialogUpdateUserComponent>,
+    @Inject(MAT_DIALOG_DATA) public ID: DialogData,
+    private snackBar: MatSnackBar
+    ) {
   }
 
   ngOnInit(): void {

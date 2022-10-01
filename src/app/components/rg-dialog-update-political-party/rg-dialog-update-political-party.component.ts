@@ -1,9 +1,11 @@
 import { Component, Inject, OnInit } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
+import { MatSnackBar } from '@angular/material/snack-bar';
 import { ActivatedRoute } from '@angular/router';
 import { Role } from 'src/app/models/auth/role-response';
 import { political_party } from 'src/app/models/political_party';
+import { PoliticalPartyDataService } from 'src/app/services/political-party-data/political-party-data.service';
 import { PoliticalPartyGetAllService } from 'src/app/services/political-party-get-all.service';
 import { DialogData, RgDialogInputComponent } from '../rg-dialog-input/rg-dialog-input.component';
 
@@ -21,8 +23,12 @@ export class RgDialogUpdatePoliticalPartyComponent implements OnInit {
 
   politicalId: string ='';
 
-  constructor(private PoliticalPartyGetAllService: PoliticalPartyGetAllService, public dialogRef: MatDialogRef<RgDialogInputComponent>,
-    @Inject(MAT_DIALOG_DATA) public ID: DialogData) {
+  constructor(
+    private politicalPartyDataService: PoliticalPartyDataService,
+    public dialogRef: MatDialogRef<RgDialogInputComponent>,
+    @Inject(MAT_DIALOG_DATA) public ID: DialogData,
+    private snackBar: MatSnackBar
+    ) {
   }
 
   ngOnInit(): void {
@@ -30,7 +36,21 @@ export class RgDialogUpdatePoliticalPartyComponent implements OnInit {
   }
 
   updatePolitical_partySubmit() {
-
+    if (this.updatePolitical_partyForm.valid) {
+      this.politicalPartyDataService.update(
+        this.politicalId,
+        this.updatePolitical_partyForm.value['lema']!,
+        this.updatePolitical_partyForm.value['nombre']!
+      ).subscribe({
+        next: () => {
+          this.snackBar.open(`Creacion de usuario exitoso`, 'cerrar', { duration: 2000 });
+          this.dialogRef.close(true);
+        },
+        error: (err) => {         
+          this.snackBar.open(err.error, 'cerrar', { duration: 2000 });
+         }
+      });
+    }
   }
 
   isInvalidField(field: string) {

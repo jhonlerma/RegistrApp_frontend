@@ -25,6 +25,7 @@ import { UserListResolver } from './resolvers/user-list/user-list.resolver';
 import { UserResolver } from './resolvers/user/user.resolver';
 import { PoliticalPartyGetAllService } from './services/political-party-get-all.service';
 import { CandidateListResolver } from './resolvers/candidate-list/candidate-list.resolver';
+import { ReportsListResolver } from './resolvers/reports-list/reports-list.resolver';
 
 const routes: Routes = [
   {
@@ -141,6 +142,10 @@ const routes: Routes = [
         },
         canActivate: [RoleGuard],
         path: 'reports',
+        resolve: {
+          response: ReportsListResolver,
+         
+        },
         component: RgReportsViewerComponent
       },
 

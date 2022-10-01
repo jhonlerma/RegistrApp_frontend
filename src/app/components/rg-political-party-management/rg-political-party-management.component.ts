@@ -1,4 +1,4 @@
-import { Component, Input, OnInit } from '@angular/core';
+import { ChangeDetectorRef, Component, Input, OnInit } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
 import { RgDialogInputComponent } from '../rg-dialog-input/rg-dialog-input.component';
 import { RgPoliticalPartyGetAllComponent } from '../rg-political-party-get-all/rg-political-party-get-all.component';
@@ -11,6 +11,8 @@ import { MatTableDataSource } from '@angular/material/table';
 import { political_party } from 'src/app/models/political_party';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { RgDialogUpdatePoliticalPartyComponent } from '../rg-dialog-update-political-party/rg-dialog-update-political-party.component';
+import { PoliticalPartyDataService } from 'src/app/services/political-party-data/political-party-data.service';
+import { RgConfirmDialogComponent } from '../rg-confirm-dialog/rg-confirm-dialog.component';
 
 @Component({
   selector: 'app-rg-political-party-management',
@@ -31,7 +33,13 @@ export class RgPoliticalPartyManagementComponent implements OnInit {
     idPolitical_party: new FormControl("",[Validators.required])
   });
   
-  constructor(public dialog: MatDialog, private route: ActivatedRoute, private service: PoliticalPartyGetAllService, private snackbar: MatSnackBar) { 
+  constructor(
+    public dialog: MatDialog, private route: ActivatedRoute,
+    private service: PoliticalPartyGetAllService,
+    private politicalPartyDataService: PoliticalPartyDataService,
+    private snackbar: MatSnackBar,
+    private changeDetectorRefs: ChangeDetectorRef
+    ) { 
     this.political_partyList = this.route.snapshot.data['response'];
     this.dataSource = new MatTableDataSource(this.political_partyList);
   }
@@ -102,13 +110,49 @@ export class RgPoliticalPartyManagementComponent implements OnInit {
     dialogRef.afterClosed().subscribe(result => {
       console.log(result);
       if (result){
-        console.log("La consulta fue realizada con exito");
-      }"La consulta no fue realizada con exito"
+        this.updatePoliticalPartyTableRequest();
+        this.snackbar.open('Usuario editado exitosamente', 'cerrar', { duration: 2000 });
+      }
     });
   }
 
   openDelete(_id: string){
-    alert(`vas a eliminar el elemento con el id: ${_id}`)
+    const dialogRef = this.dialog.open(RgConfirmDialogComponent, {},);
+    dialogRef.componentInstance.message = `vas a eliminar el elemento con el id: ${_id}\n¿Estas seguro?`;
+
+    dialogRef.afterClosed().subscribe(result => {
+      if (result) {
+        this.deleteRequest(_id);
+      }
+    });
   }
+
+  deleteRequest(id: string){
+    this.politicalPartyDataService.delete(id).subscribe({
+      next: (x) =>{
+        this.snackbar.open('Usuario eliminado exitosamente', 'cerrar', { duration: 2000 });
+        this.updatePoliticalPartyTableRequest();
+      },
+      error: (err)=>{
+        this.snackbar.open(err.error, 'cerrar', { duration: 2000 });
+      }
+    })
+
+  }
+
+  updatePoliticalPartyTableRequest(){
+    this.politicalPartyDataService.getAll().subscribe({
+      next: (x) =>{
+        this.political_partyList = x;
+        this.dataSource = new MatTableDataSource(this.political_partyList);
+        this.changeDetectorRefs.detectChanges();    
+      },
+      error: (err)=>{
+        this.snackbar.open(err.error, 'cerrar', { duration: 2000 });
+      }
+    })
+
+  }
+
 
 }

@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { ActivatedRoute } from '@angular/router';
 
 @Component({
   selector: 'app-rg-reports-viewer',
@@ -7,7 +8,11 @@ import { Component, OnInit } from '@angular/core';
 })
 export class RgReportsViewerComponent implements OnInit {
 
-  constructor() { }
+  reportsList:any;
+  constructor(private route: ActivatedRoute) { 
+    this.reportsList = this.route.snapshot.data['response'];
+
+  }
 
   ngOnInit(): void {
   }
