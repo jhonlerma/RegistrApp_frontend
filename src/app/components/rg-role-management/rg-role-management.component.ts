@@ -30,11 +30,8 @@ export class RgRoleManagementComponent implements AfterViewInit {
     const filterValue = (event.target as HTMLInputElement).value;
     this.dataSource.filter = filterValue.trim().toLowerCase();
   }
- 
+  
 
-  startDeletion(id: string) {
-    alert(`vas a eliminar el elemento con el id: ${id}`)
-  }
 
   
 }
