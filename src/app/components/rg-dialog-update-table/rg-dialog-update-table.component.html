@@ -1,0 +1,41 @@
+<mat-card-title class="update-user-card">Actualizar Mesa</mat-card-title>
+<mat-card-content>
+    <form [formGroup]="updateTableForm" (ngSubmit)="updateTableSubmit()">
+
+       
+
+        <mat-form-field appearance="outline">
+            <mat-label>Numero de mesa</mat-label>
+            <input formControlName="numero" name="numero" matInput placeholder="100" table-input>
+            <mat-icon matSuffix>dialpad</mat-icon>
+            <mat-hint>Identificador de la mesa</mat-hint>
+            <mat-error *ngIf="isInvalidField('numero')">
+                <span *ngIf="hasError('numero', 'required')">El campo es requerido</span>
+            </mat-error>
+        </mat-form-field>
+
+
+
+        <mat-form-field appearance="outline">
+            <mat-label>Personas Registradas</mat-label>
+            <input formControlName="cantidad_inscritos" name="cantidad_inscritos" matInput placeholder="Placeholder"
+                table-input>
+            <mat-icon matSuffix>people</mat-icon>
+            <mat-hint>Personas registadas en la mesa</mat-hint>
+            <mat-error *ngIf="isInvalidField('cantidad_inscritos')">
+                <span *ngIf="hasError('cantidad_inscritos', 'required')">El campo es requerido</span>
+            </mat-error>
+        </mat-form-field>
+
+
+
+
+
+
+
+        <button class="update-user-button" type="submit" mat-raised-button color="accent">Actualizar Mesa</button>
+        <button [matDialogClose] class="update-user-button" mat-raised-button color="primary">Cerrar</button>
+
+
+    </form>
+</mat-card-content>

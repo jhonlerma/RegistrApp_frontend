@@ -72,6 +72,10 @@ const routes: Routes = [
         },
         canActivate: [RoleGuard],
         path: 'role-management',
+        resolve: {
+          response: RoleListResolver,
+         
+        },
         component: RgRoleManagementComponent
       },
       {

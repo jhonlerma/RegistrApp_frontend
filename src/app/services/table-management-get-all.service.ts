@@ -5,15 +5,18 @@ import { LOCAL_STORAGE_TOKEN } from '../constants';
 import { Table } from '../models/table';
 import { DataService } from './data/data.service';
 import { IdResponse } from '../models/id-response';
+import { environment } from 'src/environments/environment';
 
 @Injectable({
   providedIn: 'root'
 })
 export class TableManagementGetAllService {
-
+  ENDPOINT = 'table/'
+  ruta='http://localhost:3000/'
   private API_DATOS = "http://localhost:4000/table/list";
 
-  constructor(private http: HttpClient, private dataService:DataService) { }
+  constructor(private http: HttpClient,
+     private dataService:DataService) { }
 
   public getAll(): Observable<Table[]>{
     this.dataService.loadingScreen.next(true);
@@ -50,6 +53,50 @@ export class TableManagementGetAllService {
       return throwError(()=>err);
     }));
   }
+  updateTable(
+    id:string,
+    numero:string,
+    cantidad_inscritos:string
+  ):Observable<Table>{
+    this.dataService.loadingScreen.next(true);
+    return this.http.put<Table>(`${this.ruta}${this.ENDPOINT}${id}`,{
+      numero,
+      cantidad_inscritos
+    },{
+      observe: 'response',
+      headers: {
+        'authorization': `Bearer ${localStorage.getItem(LOCAL_STORAGE_TOKEN)}`
+      }
+    }).pipe(map(response => {
+      this.dataService.loadingScreen.next(false);
+
+      return response.body!;
+    }), catchError((err) => {
+      this.dataService.loadingScreen.next(false);
+
+      return throwError(() => err);
+    }));
+  }
+
+  deletTable(id: string): Observable<Table> {
+    this.dataService.loadingScreen.next(true);
+    return this.http.delete<Table>(`${this.ruta}${this.ENDPOINT}${id}`,
+      {
+        observe: 'response',
+        headers: {
+          'authorization': `Bearer ${localStorage.getItem(LOCAL_STORAGE_TOKEN)}`
+        }
+      }).pipe(map(response => {
+        this.dataService.loadingScreen.next(false);
+
+        return response.body!;
+      }), catchError((err) => {
+        this.dataService.loadingScreen.next(false);
+
+        return throwError(() => err);
+      }));
+  }
+
 }
 
 

@@ -42,16 +42,7 @@
                         <td class="table-cell" mat-cell *matCellDef="let element"> {{element.table.numero}} </td>
                     </ng-container>
 
-
-                    <ng-container matColumnDef="Eliminar">
-                        <th class="table-cell" mat-header-cell *matHeaderCellDef> Eliminar </th>
-                        <td class="table-cell" mat-cell *matCellDef="let element">
-                            <button mat-icon-button (click)="startDeletion(element.id)">
-                                <mat-icon class="delete-icon" fontSet="material-icons-outlined">delete</mat-icon>
-                            </button>
-                        </td>
-                    </ng-container>
-
+                   
 
                     <tr mat-header-row *matHeaderRowDef="displayedColumns; sticky: true"></tr>
                     <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
