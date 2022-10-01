@@ -1,1 +1,115 @@
-<p>rg-candidate-management works!</p>
+<mat-card>
+    <mat-card-title>Crear Candidato</mat-card-title>
+    <mat-card-content>
+        <form [formGroup]="createCandidateForm" (ngSubmit)="createCandidateSubmit()">
+
+            <mat-form-field class="login-form-field" appearance="standard">
+                <mat-label>Documento</mat-label>
+                <input formControlName="document" name="document" matInput placeholder="AB123459">
+                <mat-icon fontSet="material-icons-outlined" matSuffix>badge</mat-icon>
+                <mat-hint>Ingrese su documento</mat-hint>
+
+                <mat-error *ngIf="isInvalidField('document')">
+                    <span *ngIf="hasError('document', 'required')">El campo es requerido</span>
+                </mat-error>
+
+            </mat-form-field>
+
+            <mat-form-field class="login-form-field" appearance="standard">
+                <mat-label>Apellidos</mat-label>
+                <input formControlName="lastName" name="lastName" matInput placeholder="Perez Perez">
+                <mat-icon fontSet="material-icons-outlined" matSuffix>person</mat-icon>
+                <mat-hint>Ingrese sus apellidos</mat-hint>
+
+                <mat-error *ngIf="isInvalidField('lastName')">
+                    <span *ngIf="hasError('lastName', 'required')">El campo es requerido</span>
+                </mat-error>
+
+            </mat-form-field>
+
+            <mat-form-field class="login-form-field" appearance="standard">
+                <mat-label>Nombres</mat-label>
+                <input formControlName="name" name="name" matInput placeholder="Nombres">
+                <mat-icon fontSet="material-icons-outlined" matSuffix>person</mat-icon>
+                <mat-hint>Ingrese sus nombres</mat-hint>
+
+                <mat-error *ngIf="isInvalidField('name')">
+                    <span *ngIf="hasError('name', 'required')">El campo es requerido</span>
+                </mat-error>
+            </mat-form-field>
+
+            <mat-form-field class="login-form-field" appearance="standard">
+              <mat-label>Resolucion</mat-label>
+              <input formControlName="resolution" name="resolution" matInput placeholder="Resolución">
+              <mat-icon fontSet="material-icons-outlined" matSuffix>assignment_ind</mat-icon>
+              <mat-hint>Ingrese su resolución</mat-hint>
+
+              <mat-error *ngIf="isInvalidField('resolution')">
+                  <span *ngIf="hasError('resolution', 'required')">El campo es requerido</span>
+              </mat-error>
+          </mat-form-field>            
+
+            <mat-form-field appearance="standard">
+              <mat-label>Partido Politico</mat-label>
+              <mat-select formControlName="politicalParty" name="politicalParty">
+                <mat-option *ngFor="let politicalParty of politicalPartyList" [value]="politicalParty._id">
+                  {{politicalParty.nombre}}
+                </mat-option>
+              </mat-select>
+              <mat-icon fontSet="material-icons-outlined" matSuffix>
+                diversity_3
+              </mat-icon>
+              <mat-hint>Seleccione un partido político</mat-hint>
+      
+              <mat-error *ngIf="isInvalidField('politicalParty')">
+                <span *ngIf="hasError('politicalParty', 'required')">El campo es requerido</span>
+              </mat-error>
+      
+            </mat-form-field>
+
+            <button class="login-button" type="submit" mat-raised-button color="accent">Crear Candidato</button>
+
+        </form>
+    </mat-card-content>
+  </mat-card>
+
+  <!-- <mat-form-field appearance="standard">
+    <mat-label>Filter</mat-label>
+    <input matInput (keyup)="applyFilter($event)" placeholder="Ex. ium" #input>
+  </mat-form-field>
+  
+  <table mat-table [dataSource]="candidateList" class="mat-elevation-z8">
+  
+    
+    <ng-container matColumnDef="position">
+      <th mat-header-cell *matHeaderCellDef> No. </th>
+      <td mat-cell *matCellDef="let element"> {{element.position}} </td>
+    </ng-container>
+  
+    
+    <ng-container matColumnDef="name">
+      <th mat-header-cell *matHeaderCellDef> Name </th>
+      <td mat-cell *matCellDef="let element"> {{element.name}} </td>
+    </ng-container>
+  
+    
+    <ng-container matColumnDef="weight">
+      <th mat-header-cell *matHeaderCellDef> Weight </th>
+      <td mat-cell *matCellDef="let element"> {{element.weight}} </td>
+    </ng-container>
+  
+    
+    <ng-container matColumnDef="symbol">
+      <th mat-header-cell *matHeaderCellDef> Symbol </th>
+      <td mat-cell *matCellDef="let element"> {{element.symbol}} </td>
+    </ng-container>
+  
+    <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+    <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+  
+    
+    <tr class="mat-row" *matNoDataRow>
+      <td class="mat-cell" colspan="4">No data matching the filter "{{input.value}}"</td>
+    </tr>
+  </table> -->
+

@@ -1,6 +1,7 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
 import { RgCandidateManagementComponent } from './components/rg-candidate-management/rg-candidate-management.component';
+import { RgCityzenRegisterComponent } from './components/rg-cityzen-register/rg-cityzen-register.component';
 import { RgDashboardComponent } from './components/rg-dashboard/rg-dashboard.component';
 import { RgLoginComponent } from './components/rg-login/rg-login.component';
 import { RgNotFoundComponent } from './components/rg-not-found/rg-not-found.component';
@@ -17,10 +18,13 @@ import { AuthGuard } from './guards/auth/auth.guard';
 import { NoAuthGuard } from './guards/auth/no-auth.guard';
 import { RoleGuard } from './guards/role/role.guard';
 import { ResultListResolver } from './resolvers/result-list/result-list.resolver';
+import { PoliticalPartyListResolver } from './resolvers/political-party-list/political-party-list.resolver';
 import { RoleListResolver } from './resolvers/role-list/role-list.resolver';
 import { TableListResolver } from './resolvers/table-list/table-list.resolver';
 import { UserListResolver } from './resolvers/user-list/user-list.resolver';
 import { UserResolver } from './resolvers/user/user.resolver';
+import { PoliticalPartyGetAllService } from './services/political-party-get-all.service';
+import { CandidateListResolver } from './resolvers/candidate-list/candidate-list.resolver';
 
 const routes: Routes = [
   {
@@ -31,6 +35,10 @@ const routes: Routes = [
       {
         path: '',
         component: RgLoginComponent
+      },
+      {
+        path: 'register',
+        component: RgCityzenRegisterComponent
       },
     ],
   },
@@ -97,6 +105,10 @@ const routes: Routes = [
         canActivate: [RoleGuard],
 
         path: 'political-party-management',
+        resolve: {
+          response: PoliticalPartyListResolver,
+          candidates: CandidateListResolver,
+        },
         component: RgPoliticalPartyManagementComponent
       },
       {
@@ -105,6 +117,9 @@ const routes: Routes = [
         },
         canActivate: [RoleGuard],
         path: 'candidate-management',
+        resolve: {
+          response:PoliticalPartyListResolver,
+        },
         component: RgCandidateManagementComponent
       },
       {

@@ -1,34 +1,27 @@
 <mat-toolbar color="primary">
-    <button *ngIf="isLoggedIn" type="button" (click)="sidebarToggle()" aria-label="Toggle sidenav" mat-icon-button>
-        <mat-icon aria-label="Side nav toggle icon">menu</mat-icon>
+  <button *ngIf="isLoggedIn" type="button" (click)="sidebarToggle()" aria-label="Toggle sidenav" mat-icon-button>
+    <mat-icon aria-label="Side nav toggle icon">menu</mat-icon>
+  </button>
+  <span class="title" *ngIf="isLoggedIn" [routerLink]="['/', 'dashboard']">RegistrApp Votaciones</span>
+  <span class="title" *ngIf="!isLoggedIn" [routerLink]="['/']">RegistrApp Votaciones</span>
+  <span class="spacer"></span>
+  <button *ngIf="isLoggedIn" mat-button [matMenuTriggerFor]="menu">
+    <span>{{username}}</span>
+    <mat-icon class="user-icon" fontSet="material-icons-outlined">face</mat-icon>
+  </button>
+  <mat-menu #menu="matMenu">
+    <button mat-menu-item (click)="logout()">
+      <mat-icon fontSet="material-icons-outlined" color="accent" matPrefix>power_settings_new</mat-icon>
+      <span>Cerrar Sesión</span>
     </button>
-    <span class="title" *ngIf="isLoggedIn" [routerLink]="['/', 'dashboard']">RegistrApp Votaciones</span>
-    <span class="title" *ngIf="!isLoggedIn" [routerLink]="['/']">RegistrApp Votaciones</span>
-    <span class="spacer"></span>
-    <button *ngIf="isLoggedIn" mat-button [matMenuTriggerFor]="menu">
-      <span>{{username}}</span>
-      <mat-icon class="user-icon" fontSet="material-icons-outlined">face</mat-icon>
-    </button>
-    <mat-menu #menu="matMenu">
-      <button mat-menu-item (click)="logout()">
-        <mat-icon fontSet="material-icons-outlined" color="accent" matPrefix>power_settings_new</mat-icon>
-        <span>Cerrar Sesión</span>
-      </button>
-    </mat-menu>
-    <button *ngIf="!isLoggedIn" mat-button (click)="registroCiudadano()">
-      <span>Registrate</span>
-      <mat-icon class="user-icon" fontSet="material-icons-outlined" matSuffix>person_add</mat-icon>
-    </button>
+  </mat-menu>
+  <button *ngIf="!isLoggedIn && !isOnRegister" mat-button [routerLink]="['/', 'register']">
+    <span>Registrate</span>
+    <mat-icon class="user-icon" fontSet="material-icons-outlined" matSuffix>person_add</mat-icon>
+  </button>
+  <button *ngIf="isOnRegister" mat-button [routerLink]="['/']">
+    <span>Iniciar Sesión</span>
+    <mat-icon class="user-icon" fontSet="material-icons-outlined" matSuffix>login</mat-icon>
+  </button>
 
 </mat-toolbar>
-<!-- <mat-toolbar color="primary">
-    <button
-      type="button"
-      aria-label="Toggle sidenav"
-      mat-icon-button
-      (click)="drawer.toggle()"
-      *ngIf="isHandset$ | async">
-      <mat-icon aria-label="Side nav toggle icon">menu</mat-icon>
-    </button>
-    <span>registrapp_frontend</span>
-  </mat-toolbar> -->

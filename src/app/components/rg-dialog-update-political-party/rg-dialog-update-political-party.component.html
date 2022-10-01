@@ -1,0 +1,26 @@
+<mat-card-title>Actualizar Usuario</mat-card-title>
+<mat-card-content>
+  <form [formGroup]="updatePolitical_partyForm" (ngSubmit)="updatePolitical_partySubmit()">
+
+    <mat-form-field class="update-user-form-field" appearance="standard">
+      <mat-label> Ingrese el lema del partido </mat-label>
+      <input formControlName="lema" name="lema" matInput placeholder="laaa">
+
+      <mat-error *ngIf="isInvalidField('lema')">
+        <span *ngIf="hasError('lema', 'required')">El campo es requerido</span>
+      </mat-error>
+    </mat-form-field>
+
+    <mat-form-field class="update-user-form-field" appearance="standard">
+        <mat-label> Ingrese el nombre del partido </mat-label>
+        <input formControlName="nombre" name="nombre" matInput placeholder="Azul">
+
+        <mat-error *ngIf="isInvalidField('nombre')">
+          <span *ngIf="hasError('nombre', 'required')">El campo es requerido</span>
+        </mat-error>
+      </mat-form-field>
+
+    <button class="update-user-button" type="submit" mat-raised-button color="accent"> Actualizar Partido Politico </button>
+
+  </form>
+</mat-card-content>

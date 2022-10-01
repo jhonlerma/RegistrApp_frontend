@@ -12,9 +12,14 @@ import { SidebarService } from 'src/app/services/sidebar/sidebar.service';
 export class RgAppBarComponent implements OnInit {
 
   isLoggedIn: boolean = false;
+  isOnRegister: boolean = false;
   isVisibleSidebar = false;
   username?: string | null;
-  constructor(private dataService: DataService, private authService: AuthService, private router: Router) {
+  constructor(
+    private dataService: DataService,
+    private sidebarService: SidebarService,
+    private authService: AuthService,
+    private router: Router) {
 
   }
 
@@ -26,6 +31,10 @@ export class RgAppBarComponent implements OnInit {
 
     this.dataService.username.subscribe(x => {
       this.username = x;
+    })
+
+    this.dataService.isOnRegister.subscribe(x => {
+      this.isOnRegister = x;
     })
 
   }
@@ -40,6 +49,8 @@ export class RgAppBarComponent implements OnInit {
   }
   
   sidebarToggle() {
+    
+    this.sidebarService.sidebarToggle();
   }
 
 }
