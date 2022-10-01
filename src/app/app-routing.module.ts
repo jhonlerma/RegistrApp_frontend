@@ -115,6 +115,7 @@ const routes: Routes = [
         path: 'candidate-management',
         resolve: {
           response:PoliticalPartyListResolver,
+          candidates: CandidateListResolver,
         },
         component: RgCandidateManagementComponent
       },
