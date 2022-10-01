@@ -9,6 +9,8 @@ import { ActivatedRoute, ChildActivationStart } from '@angular/router';
 import { PoliticalPartyGetAllService } from 'src/app/services/political-party-get-all.service';
 import { MatTableDataSource } from '@angular/material/table';
 import { political_party } from 'src/app/models/political_party';
+import { MatSnackBar } from '@angular/material/snack-bar';
+import { RgDialogUpdatePoliticalPartyComponent } from '../rg-dialog-update-political-party/rg-dialog-update-political-party.component';
 
 @Component({
   selector: 'app-rg-political-party-management',
@@ -16,20 +18,29 @@ import { political_party } from 'src/app/models/political_party';
   styleUrls: ['./rg-political-party-management.component.scss']
 })
 export class RgPoliticalPartyManagementComponent implements OnInit {
-    political_partyList: political_party[] = [];
-    createUserForm = new FormGroup({
-    lema: new FormControl("", [Validators.required]),
-    name: new FormControl("", [Validators.required]),
-  });
+  political_partyList: political_party[] = [];
 
-  displayedColumns: string[] = ['_id', 'lema', 'name'];
+  createTableForm= new FormGroup({
+    lema: new FormControl("",[Validators.required]),
+    nombre: new FormControl("",[Validators.required])
+  });
+  displayedColumns: string[] = ['_id', 'lema', 'name','Editar','Eliminar'];
   dataSource: MatTableDataSource<political_party>;
-  constructor(public dialog: MatDialog, private route: ActivatedRoute, private service: PoliticalPartyGetAllService) { 
-    this. political_partyList =this.route.snapshot.data['response'];
+
+  searchTableForm= new FormGroup({
+    idPolitical_party: new FormControl("",[Validators.required])
+  });
+  
+  constructor(public dialog: MatDialog, private route: ActivatedRoute, private service: PoliticalPartyGetAllService, private snackbar: MatSnackBar) { 
+    this.political_partyList = this.route.snapshot.data['response'];
     this.dataSource = new MatTableDataSource(this.political_partyList);
   }
 
   ngOnInit(): void {
+  }
+
+  createUserSubmit() {
+
   }
 
   applyFilter(event: Event) {
@@ -57,6 +68,20 @@ export class RgPoliticalPartyManagementComponent implements OnInit {
     });
   }
 
+  createTableSubmit(){
+    this.service.createTable(this.createTableForm.value['lema']!, this.createTableForm.value['nombre']!).subscribe({
+      next:()=>{this.snackbar.open('creado exitosamente','cerrar',{duration:2000})},
+      error:err=>{console.log(err)}
+    })
+  }
+
+  isInvalidField(field: string){
+    return this.createTableForm.get(field)?.invalid && (this.createTableForm.get(field)?.dirty || this.createTableForm.get(field)?.touched);
+  }
+  hasError(field: string, validation: string){
+    return this.createTableForm.get(field)?.hasError(validation);
+  }
+
   addPolitical_party():void{
       this.service.getAll().subscribe(dataSource => {
       this.dataSource = dataSource;
@@ -65,7 +90,21 @@ export class RgPoliticalPartyManagementComponent implements OnInit {
     })
   }
 
-  openActualizar():void{
+  openActualizar(political_party: political_party):void{
+      this.openUserUpdateDialog(political_party);
+  }
+
+  openUserUpdateDialog(political_party: political_party):void{
+    const dialogRef = this.dialog.open(RgDialogUpdatePoliticalPartyComponent, {},);
+    dialogRef.componentInstance.updatePolitical_partyForm.get('lema')?.setValue(political_party.lema);
+    dialogRef.componentInstance.updatePolitical_partyForm.get('nombre')?.setValue(political_party.nombre);
+    dialogRef.componentInstance.politicalId = political_party._id;
+    dialogRef.afterClosed().subscribe(result => {
+      console.log(result);
+      if (result){
+        console.log("La consulta fue realizada con exito");
+      }"La consulta no fue realizada con exito"
+    });
   }
 
   openDelete(_id: string){
