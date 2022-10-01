@@ -2,6 +2,8 @@ import { Component, Inject, OnInit } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
 import { MatSnackBar } from '@angular/material/snack-bar';
+import { Candidate } from 'src/app/models/candidate';
+import { political_party } from 'src/app/models/political_party';
 import { CandidateDataService } from 'src/app/services/candidate-data/candidate-data.service';
 import { DialogData } from '../rg-dialog-input/rg-dialog-input.component';
 
@@ -11,6 +13,9 @@ import { DialogData } from '../rg-dialog-input/rg-dialog-input.component';
   styleUrls: ['./rg-dialog-update-candidate.component.scss']
 })
 export class RgDialogUpdateCandidateComponent implements OnInit {
+
+  candidateList: Candidate[] = [];
+  politicalPartyList: political_party[] = [];
 
   candidateId: string ='';
 

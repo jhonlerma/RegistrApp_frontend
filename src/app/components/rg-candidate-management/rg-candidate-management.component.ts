@@ -95,7 +95,7 @@ export class RgCandidateManagementComponent implements OnInit {
   }
 
   startDeletion(id: string) {
-  //   this.openUserDeleteDialog(`vas a eliminar el elemento con el id: ${id}\n¿Estas seguro?`, id);
+    this.openUserDeleteDialog(`vas a eliminar el elemento con el id: ${id}\n¿Estas seguro?`, id);
   }
 
   openUserUpdateDialog(candidate: Candidate): void {
@@ -106,6 +106,7 @@ export class RgCandidateManagementComponent implements OnInit {
     dialogRef.componentInstance.updateCandidateForm.get('political_party')?.setValue(candidate.political_party._id);
     dialogRef.componentInstance.updateCandidateForm.get('resolution')?.setValue(candidate.resolution);
     dialogRef.componentInstance.candidateId = candidate._id;
+    dialogRef.componentInstance.politicalPartyList = this.politicalPartyList;
 
     dialogRef.afterClosed().subscribe(result => {
       if (result) {
@@ -114,29 +115,29 @@ export class RgCandidateManagementComponent implements OnInit {
     });
   }
 
-  // openUserDeleteDialog(message: string, id: string): void {
-  //   const dialogRef = this.dialog.open(RgConfirmDialogComponent, {},);
-  //   dialogRef.componentInstance.message = message;
+  openUserDeleteDialog(message: string, id: string): void {
+    const dialogRef = this.dialog.open(RgConfirmDialogComponent, {},);
+    dialogRef.componentInstance.message = message;
 
-  //   dialogRef.afterClosed().subscribe(result => {
-  //     if (result) {
-  //       this.deleteUserRequest(id);
-  //     }
-  //   });
-  // }
+    dialogRef.afterClosed().subscribe(result => {
+      if (result) {
+        this.deleteUserRequest(id);
+      }
+    });
+  }
 
-  // deleteUserRequest(id: string){
-  //   this.userDataService.deleteUser(id).subscribe({
-  //     next: (x) =>{
-  //       this.updateUsersTableRequest();
-  //       this.snackBar.open('Usuario eliminado exitosamente', 'cerrar', { duration: 2000 });
-  //     },
-  //     error: (err)=>{
-  //       this.snackBar.open(err.error, 'cerrar', { duration: 2000 });
-  //     }
-  //   })
+  deleteUserRequest(id: string){
+    this.candidateDataService.delete(id).subscribe({
+      next: (x) =>{
+        this.updateUsersTableRequest();
+        this.snackBar.open('Usuario eliminado exitosamente', 'cerrar', { duration: 2000 });
+      },
+      error: (err)=>{
+        this.snackBar.open(err.error, 'cerrar', { duration: 2000 });
+      }
+    })
 
-  // }
+  }
 
   updateUsersTableRequest(){
     this.candidateDataService.getAll().subscribe({

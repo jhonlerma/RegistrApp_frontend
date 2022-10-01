@@ -1,1 +1,73 @@
-<p>rg-dialog-update-candidate works!</p>
+<mat-card-title>Actualizar Usuario</mat-card-title>
+<mat-card-content>
+  <form [formGroup]="updateCandidateForm" (ngSubmit)="updateUserSubmit()">
+
+    <mat-form-field class="update-user-form-field" appearance="standard">
+      <mat-label>Nombres</mat-label>
+      <input formControlName="name" name="name" matInput placeholder="saitama123">
+      <mat-icon fontSet="material-icons-outlined" matSuffix>person</mat-icon>
+      <mat-hint>Ingrese el alias de usuario</mat-hint>
+
+      <mat-error *ngIf="isInvalidField('name')">
+        <span *ngIf="hasError('name', 'required')">El campo es requerido</span>
+      </mat-error>
+    </mat-form-field>
+
+    <mat-form-field class="update-user-form-field" appearance="standard">
+        <mat-label>Nombre Usuario</mat-label>
+        <input formControlName="last_name" name="last_name" matInput placeholder="saitama123">
+        <mat-icon fontSet="material-icons-outlined" matSuffix>person</mat-icon>
+        <mat-hint>Ingrese el alias de usuario</mat-hint>
+  
+        <mat-error *ngIf="isInvalidField('last_name')">
+          <span *ngIf="hasError('last_name', 'required')">El campo es requerido</span>
+        </mat-error>
+      </mat-form-field>
+
+      <mat-form-field appearance="standard">
+        <mat-label>Rol</mat-label>
+        <mat-select formControlName="political_party" name="political_party">
+          <mat-option *ngFor="let politicalParty of politicalPartyList" [value]="politicalParty._id">
+            {{politicalParty.nombre}}
+          </mat-option>
+        </mat-select>
+        <mat-icon fontSet="material-icons-outlined" matSuffix>
+          badge
+        </mat-icon>
+        <mat-hint>Seleccione un rol (Opcional)</mat-hint>
+
+        <mat-error *ngIf="isInvalidField('role')">
+          <span *ngIf="hasError('role', 'required')">El campo es requerido</span>
+        </mat-error>
+
+      </mat-form-field>
+
+
+      <mat-form-field class="update-user-form-field" appearance="standard">
+        <mat-label>Nombre Usuario</mat-label>
+        <input formControlName="document" name="document" matInput placeholder="saitama123">
+        <mat-icon fontSet="material-icons-outlined" matSuffix>person</mat-icon>
+        <mat-hint>Ingrese el alias de usuario</mat-hint>
+  
+        <mat-error *ngIf="isInvalidField('document')">
+          <span *ngIf="hasError('document', 'required')">El campo es requerido</span>
+        </mat-error>
+      </mat-form-field>
+
+      <mat-form-field class="update-user-form-field" appearance="standard">
+        <mat-label>Nombre Usuario</mat-label>
+        <input formControlName="resolution" name="resolution" matInput placeholder="saitama123">
+        <mat-icon fontSet="material-icons-outlined" matSuffix>person</mat-icon>
+        <mat-hint>Ingrese el alias de usuario</mat-hint>
+  
+        <mat-error *ngIf="isInvalidField('resolution')">
+          <span *ngIf="hasError('resolution', 'required')">El campo es requerido</span>
+        </mat-error>
+      </mat-form-field>
+  
+
+    <button class="update-user-button" type="submit" mat-raised-button color="accent">Actualizar Usuario</button>
+    <button [matDialogClose] class="update-user-button" mat-raised-button color="primary">Cerrar</button>
+
+  </form>
+</mat-card-content>

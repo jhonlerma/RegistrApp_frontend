@@ -22,24 +22,24 @@ import { RgConfirmDialogComponent } from '../rg-confirm-dialog/rg-confirm-dialog
 export class RgPoliticalPartyManagementComponent implements OnInit {
   political_partyList: political_party[] = [];
 
-  createTableForm= new FormGroup({
-    lema: new FormControl("",[Validators.required]),
-    nombre: new FormControl("",[Validators.required])
+  createTableForm = new FormGroup({
+    lema: new FormControl("", [Validators.required]),
+    nombre: new FormControl("", [Validators.required])
   });
-  displayedColumns: string[] = ['_id', 'lema', 'name','Editar','Eliminar'];
+  displayedColumns: string[] = ['_id', 'lema', 'name', 'Editar', 'Eliminar'];
   dataSource: MatTableDataSource<political_party>;
 
-  searchTableForm= new FormGroup({
-    idPolitical_party: new FormControl("",[Validators.required])
+  searchTableForm = new FormGroup({
+    idPolitical_party: new FormControl("", [Validators.required])
   });
-  
+
   constructor(
     public dialog: MatDialog, private route: ActivatedRoute,
     private service: PoliticalPartyGetAllService,
     private politicalPartyDataService: PoliticalPartyDataService,
     private snackbar: MatSnackBar,
     private changeDetectorRefs: ChangeDetectorRef
-    ) { 
+  ) {
     this.political_partyList = this.route.snapshot.data['response'];
     this.dataSource = new MatTableDataSource(this.political_partyList);
   }
@@ -56,67 +56,70 @@ export class RgPoliticalPartyManagementComponent implements OnInit {
     this.dataSource.filter = filterValue.trim().toLowerCase();
   }
 
-  openGetAll():void{
+  openGetAll(): void {
     const dialogRef = this.dialog.open(RgPoliticalPartyGetAllComponent, {},);
     dialogRef.afterClosed().subscribe(result => {
       console.log(result);
-      if (result){
+      if (result) {
         console.log("La consulta fue realizada con exito");
-      }"La consulta no fue realizada con exito"
+      } "La consulta no fue realizada con exito"
     });
   }
 
-  openGetID():void{
+  openGetID(): void {
     const dialogRef = this.dialog.open(RgPoliticalPartyGetIdComponent, {},);
     dialogRef.afterClosed().subscribe(result => {
       console.log(result);
-      if (result){
+      if (result) {
         console.log("La consulta fue realizada con exito");
-      }"La consulta no fue realizada con exito"
+      } "La consulta no fue realizada con exito"
     });
   }
 
-  createTableSubmit(){
+  createTableSubmit() {
     this.service.createTable(this.createTableForm.value['lema']!, this.createTableForm.value['nombre']!).subscribe({
-      next:()=>{this.snackbar.open('creado exitosamente','cerrar',{duration:2000})},
-      error:err=>{console.log(err)}
+      next: () => {
+        this.snackbar.open('creado exitosamente', 'cerrar', { duration: 2000 });
+        this.updatePoliticalPartyTableRequest()
+      },
+      error: err => { console.log(err) }
     })
   }
 
-  isInvalidField(field: string){
+  isInvalidField(field: string) {
     return this.createTableForm.get(field)?.invalid && (this.createTableForm.get(field)?.dirty || this.createTableForm.get(field)?.touched);
   }
-  hasError(field: string, validation: string){
+  hasError(field: string, validation: string) {
     return this.createTableForm.get(field)?.hasError(validation);
   }
 
-  addPolitical_party():void{
-      this.service.getAll().subscribe(dataSource => {
+  addPolitical_party(): void {
+    this.service.getAll().subscribe(dataSource => {
       this.dataSource = dataSource;
       console.log(this.dataSource);
       this.dataSource = this.dataSource;
     })
   }
 
-  openActualizar(political_party: political_party):void{
-      this.openUserUpdateDialog(political_party);
+  openActualizar(political_party: political_party): void {
+    this.openUserUpdateDialog(political_party);
   }
 
-  openUserUpdateDialog(political_party: political_party):void{
+  openUserUpdateDialog(political_party: political_party): void {
     const dialogRef = this.dialog.open(RgDialogUpdatePoliticalPartyComponent, {},);
     dialogRef.componentInstance.updatePolitical_partyForm.get('lema')?.setValue(political_party.lema);
     dialogRef.componentInstance.updatePolitical_partyForm.get('nombre')?.setValue(political_party.nombre);
     dialogRef.componentInstance.politicalId = political_party._id;
     dialogRef.afterClosed().subscribe(result => {
       console.log(result);
-      if (result){
+      if (result) {
         this.updatePoliticalPartyTableRequest();
         this.snackbar.open('Usuario editado exitosamente', 'cerrar', { duration: 2000 });
       }
     });
   }
 
-  openDelete(_id: string){
+  openDelete(_id: string) {
     const dialogRef = this.dialog.open(RgConfirmDialogComponent, {},);
     dialogRef.componentInstance.message = `vas a eliminar el elemento con el id: ${_id}\n¿Estas seguro?`;
 
@@ -127,27 +130,27 @@ export class RgPoliticalPartyManagementComponent implements OnInit {
     });
   }
 
-  deleteRequest(id: string){
+  deleteRequest(id: string) {
     this.politicalPartyDataService.delete(id).subscribe({
-      next: (x) =>{
+      next: (x) => {
         this.snackbar.open('Usuario eliminado exitosamente', 'cerrar', { duration: 2000 });
         this.updatePoliticalPartyTableRequest();
       },
-      error: (err)=>{
+      error: (err) => {
         this.snackbar.open(err.error, 'cerrar', { duration: 2000 });
       }
     })
 
   }
 
-  updatePoliticalPartyTableRequest(){
+  updatePoliticalPartyTableRequest() {
     this.politicalPartyDataService.getAll().subscribe({
-      next: (x) =>{
+      next: (x) => {
         this.political_partyList = x;
         this.dataSource = new MatTableDataSource(this.political_partyList);
-        this.changeDetectorRefs.detectChanges();    
+        this.changeDetectorRefs.detectChanges();
       },
-      error: (err)=>{
+      error: (err) => {
         this.snackbar.open(err.error, 'cerrar', { duration: 2000 });
       }
     })
