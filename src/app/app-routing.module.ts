@@ -26,6 +26,7 @@ import { UserResolver } from './resolvers/user/user.resolver';
 import { PoliticalPartyGetAllService } from './services/political-party-get-all.service';
 import { CandidateListResolver } from './resolvers/candidate-list/candidate-list.resolver';
 import { ReportsListResolver } from './resolvers/reports-list/reports-list.resolver';
+import { PermissionListResolver } from './resolvers/permission-list/permission-list.resolver';
 
 const routes: Routes = [
   {
@@ -85,6 +86,9 @@ const routes: Routes = [
         },
         canActivate: [RoleGuard],
         path: 'permission-management',
+        resolve: {
+          response:PermissionListResolver,
+        },
         component: RgPermissionManagementComponent
       },
       {

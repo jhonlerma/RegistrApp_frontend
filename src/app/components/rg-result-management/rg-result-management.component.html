@@ -6,14 +6,7 @@
     <mat-divider></mat-divider>
 
     <mat-card-content class="table-form">
-    </mat-card-content>
-    <mat-card-content>
-        <mat-divider></mat-divider>
-        <br>
-        <mat-label class="table-label">Resultados obtenidos</mat-label>
-        <br>
-        <br>
-        <div>
+        <div class="table-wrapper">
             <mat-form-field appearance="standard">
                 <mat-label>Filtrar Usuarios</mat-label>
                 <input matInput (keyup)="applyFilter($event)" placeholder="filtro cuaqlquier campo" #input>
@@ -42,7 +35,7 @@
                         <td class="table-cell" mat-cell *matCellDef="let element"> {{element.table.numero}} </td>
                     </ng-container>
 
-                   
+
 
                     <tr mat-header-row *matHeaderRowDef="displayedColumns; sticky: true"></tr>
                     <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
