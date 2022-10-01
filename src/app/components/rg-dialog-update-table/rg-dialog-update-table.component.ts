@@ -31,7 +31,7 @@ export class RgDialogUpdateTableComponent implements OnInit {
         
       ).subscribe({
         next: () => {
-          this.snackBar.open(`Creacion de usuario exitoso`, 'cerrar', { duration: 2000 });
+          this.snackBar.open(`Mesa actualizada`, 'cerrar', { duration: 2000 });
           this.dialogRef.close(true);
         },
         error: (err) => {         
