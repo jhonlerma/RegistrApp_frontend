@@ -50,6 +50,7 @@ import { RgDialogUpdateUserComponent } from './components/rg-dialog-update-user/
 import { RgDialogUpdatePoliticalPartyComponent } from './components/rg-dialog-update-political-party/rg-dialog-update-political-party.component';
 import { RgConfirmDialogComponent } from './components/rg-confirm-dialog/rg-confirm-dialog.component';
 import { RgCityzenRegisterComponent } from './components/rg-cityzen-register/rg-cityzen-register.component';
+import { RgDialogUpdateCandidateComponent } from './components/rg-dialog-update-candidate/rg-dialog-update-candidate.component';
 
 @NgModule({
   declarations: [
@@ -77,6 +78,7 @@ import { RgCityzenRegisterComponent } from './components/rg-cityzen-register/rg-
     RgDialogUpdatePoliticalPartyComponent,
     RgConfirmDialogComponent,
     RgCityzenRegisterComponent,
+    RgDialogUpdateCandidateComponent,
   ],
   imports: [
     BrowserModule,
