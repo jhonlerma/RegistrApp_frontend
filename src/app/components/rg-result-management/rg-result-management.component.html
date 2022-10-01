@@ -1,1 +1,70 @@
-<p>rg-result-management works!</p>
+<mat-card class="table-card">
+    <mat-card-header class="table-header">
+        <mat-card-title class="table-title">Resultados</mat-card-title>
+        <img class="table-logo" mat-card-image src="../../../assets/images/logo.webp" alt="Photo of a Shiba Inu">
+    </mat-card-header>
+    <mat-divider></mat-divider>
+
+    <mat-card-content class="table-form">
+    </mat-card-content>
+    <mat-card-content>
+        <mat-divider></mat-divider>
+        <br>
+        <mat-label class="table-label">Resultados obtenidos</mat-label>
+        <br>
+        <br>
+        <div>
+            <mat-form-field appearance="standard">
+                <mat-label>Filtrar Usuarios</mat-label>
+                <input matInput (keyup)="applyFilter($event)" placeholder="filtro cuaqlquier campo" #input>
+                <mat-icon fontSet="material-icons-outlined" matSuffix>search</mat-icon>
+            </mat-form-field>
+            <div class="table-container mat-elevation-z8">
+                <table mat-table [dataSource]="dataSource">
+                    <ng-container matColumnDef="name">
+                        <th class="table-cell" mat-header-cell *matHeaderCellDef> Nombres </th>
+                        <td class="table-cell" mat-cell *matCellDef="let element"> {{element.candidate.name}} </td>
+                    </ng-container>
+
+                    <ng-container matColumnDef="last_name">
+                        <th class="table-cell" mat-header-cell *matHeaderCellDef> Apellidos </th>
+                        <td class="table-cell" mat-cell *matCellDef="let element"> {{element.candidate.last_name}} </td>
+                    </ng-container>
+
+                    <ng-container matColumnDef="nombre">
+                        <th class="table-cell" mat-header-cell *matHeaderCellDef> Partido </th>
+                        <td class="table-cell" mat-cell *matCellDef="let element">
+                            {{element.candidate.political_party.nombre}} </td>
+                    </ng-container>
+
+                    <ng-container matColumnDef="numero">
+                        <th class="table-cell" mat-header-cell *matHeaderCellDef> Mesa </th>
+                        <td class="table-cell" mat-cell *matCellDef="let element"> {{element.table.numero}} </td>
+                    </ng-container>
+
+
+                    <ng-container matColumnDef="Eliminar">
+                        <th class="table-cell" mat-header-cell *matHeaderCellDef> Eliminar </th>
+                        <td class="table-cell" mat-cell *matCellDef="let element">
+                            <button mat-icon-button (click)="startDeletion(element.id)">
+                                <mat-icon class="delete-icon" fontSet="material-icons-outlined">delete</mat-icon>
+                            </button>
+                        </td>
+                    </ng-container>
+
+
+                    <tr mat-header-row *matHeaderRowDef="displayedColumns; sticky: true"></tr>
+                    <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+
+                    <!-- Row shown when there is no matching data. -->
+                    <tr class="mat-row" *matNoDataRow>
+                        <td class="mat-cell" colspan="4">No data matching the filter "{{input.value}}"</td>
+                    </tr>
+                </table>
+
+            </div>
+
+        </div>
+    </mat-card-content>
+
+</mat-card>
