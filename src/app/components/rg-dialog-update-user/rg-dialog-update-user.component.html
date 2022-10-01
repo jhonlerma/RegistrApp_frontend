@@ -20,7 +20,7 @@
               {{role.name}}
             </mat-option>
           </mat-select>
-          <mat-icon fontSet="material-icons-outlined" matSuffix (click)="toogleShowPasswordIcon()">
+          <mat-icon fontSet="material-icons-outlined" matSuffix>
             badge
           </mat-icon>
           <mat-hint>Seleccione un rol (Opcional)</mat-hint>
@@ -30,8 +30,8 @@
           </mat-error>
   
         </mat-form-field>
-    
         <button class="update-user-button" type="submit" mat-raised-button color="accent">Actualizar Usuario</button>
+        <button [matDialogClose] class="update-user-button" mat-raised-button color="primary">Cerrar</button>
   
       </form>
     </mat-card-content>
