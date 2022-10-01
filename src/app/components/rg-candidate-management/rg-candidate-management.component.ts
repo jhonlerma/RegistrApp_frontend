@@ -20,7 +20,6 @@ export class RgCandidateManagementComponent implements OnInit {
 
   candidateList: Candidate[] = [];
   politicalPartyList:political_party[] = [];
-  selectedOption: string | null = '';
 
   createCandidateForm = new FormGroup({
     document: new FormControl("", [Validators.required]),
@@ -30,6 +29,9 @@ export class RgCandidateManagementComponent implements OnInit {
     politicalParty: new FormControl("", [Validators.required])
   });
 
+  resultsLength = 0;
+  isLoadingResults = true;
+  isRateLimitReached = false;
   displayedColumns: string[] = ['document', 'name', 'lastName', 'political_party', 'resolution','Editar', 'Eliminar'];
   dataSourcePoliticalParty:MatTableDataSource<political_party>;
   dataSource:MatTableDataSource<Candidate>;

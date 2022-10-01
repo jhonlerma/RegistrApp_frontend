@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { AfterViewInit, Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { AuthService } from 'src/app/services/auth/auth.service';
 import { DataService } from 'src/app/services/data/data.service';
@@ -9,7 +9,7 @@ import { SidebarService } from 'src/app/services/sidebar/sidebar.service';
   templateUrl: './rg-app-bar.component.html',
   styleUrls: ['./rg-app-bar.component.scss']
 })
-export class RgAppBarComponent implements OnInit {
+export class RgAppBarComponent implements AfterViewInit {
 
   isLoggedIn: boolean = false;
   isOnRegister: boolean = false;
@@ -22,8 +22,7 @@ export class RgAppBarComponent implements OnInit {
     private router: Router) {
 
   }
-
-  ngOnInit(): void {
+  ngAfterViewInit(): void {
     this.username = ''
     this.dataService.isLoggedIn.subscribe(x => {
       this.isLoggedIn = x;
@@ -36,6 +35,10 @@ export class RgAppBarComponent implements OnInit {
     this.dataService.isOnRegister.subscribe(x => {
       this.isOnRegister = x;
     })
+
+  }
+
+  ngOnInit(): void {
 
   }
 

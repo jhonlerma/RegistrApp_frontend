@@ -22,10 +22,10 @@ export class PoliticalPartyDataService {
         'authorization': `Bearer ${localStorage.getItem(LOCAL_STORAGE_TOKEN)}`
       }
 
-    }).pipe(map(x=>{
+    }).pipe(map(body=>{
       this.dataService.loadingScreen.next(false);
-      console.log(x);
-      return x;
+      console.log(body);
+      return body;
     }),catchError((err)=>{
       this.dataService.loadingScreen.next(false);
       return throwError(()=>err);

@@ -25,15 +25,16 @@ export class CandidateDataService {
         'authorization': `Bearer ${localStorage.getItem(LOCAL_STORAGE_TOKEN)}`
       }
 
-    }).pipe(map(x => {
+    }).pipe(map(body => {
       this.dataService.loadingScreen.next(false);
-      console.log(x);
-      return x[0];
+      console.log(body);
+      return body[0];
     }), catchError((err) => {
       this.dataService.loadingScreen.next(false);
       return throwError(() => err);
     }));
   }
+
   createCandidate(
     document: string,
     name: string,
@@ -65,6 +66,7 @@ export class CandidateDataService {
         return throwError(() => err);
       }));
   }
+
   updateCandidate(
     id: string,
     document: string,

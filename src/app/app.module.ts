@@ -80,6 +80,7 @@ import { RgDialogUpdateTableComponent } from './components/rg-dialog-update-tabl
     RgConfirmDialogComponent,
     RgCityzenRegisterComponent,
     RgDialogUpdateCandidateComponent,
+    RgDialogUpdateTableComponent,
   ],
   imports: [
     HttpClientModule,

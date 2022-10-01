@@ -52,7 +52,10 @@ export class RgTableManagementComponent  {
   
   createTableSubmit(){
     this.service.createTable(this.createTableForm.value['numero']!, this.createTableForm.value['cantidad_inscritos']!).subscribe({
-      next:()=>{this.snackBar.open('creado exitosamente','cerrar',{duration:2000})},
+      next:()=>{
+        this.snackBar.open('creado exitosamente','cerrar',{duration:2000});
+        this.updateTableRequest();
+    },
       error:err=>{console.log(err);
       }
       
